@@ -30,3 +30,13 @@ $app->get('/login', function($req, $res) use($app)
 {
     return $this->renderer->render($res, 'login/login.php');
 });
+
+
+//Check login user
+$app->post('/checkUserCredentials', function($req, $res) use($app){
+
+    //print_r($_POST);
+    require_once "../app/controllers/checkUserCredentials.php";
+    return checkUsuario();
+
+});

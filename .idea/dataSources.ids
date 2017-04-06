@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="dataSourceStorage">
+  <data-source name="MySQL - stock@localhost" uuid="337f93cd-9ea2-42c0-a640-662f2ecbff73">
+    <database-info product="MySQL" version="5.7.14" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.35 ( Revision: 5fb9c5849535c13917c2cf9baaece6ef9693ef27 )">
+      <extra-name-characters>#@</extra-name-characters>
+      <identifier-quote-string>`</identifier-quote-string>
+    </database-info>
+    <case-sensitivity plain-identifiers="lower" quoted-identifiers="lower"/>
+    <database-model serializer="dbm" rdbms="MYSQL" format-version="2.6">
+      <schema id="1" name="stock">
+        <visible>1</visible>
+      </schema>
+      <schema id="2" name="encuesta_rrhh"/>
+      <schema id="3" name="gi_msp"/>
+      <schema id="4" name="information_schema"/>
+      <schema id="5" name="lideres_db"/>
+      <schema id="6" name="movilidades"/>
+      <schema id="7" name="mysql"/>
+      <schema id="8" name="performance_schema"/>
+      <schema id="9" name="sys"/>
+      <table id="10" parent="1" name="usuarios">
+        <comment>tabla de usuarios</comment>
+      </table>
+      <column id="11" parent="10" name="USUARIO_ID">
+        <mandatory>1</mandatory>
+        <data-type>int(11)|0</data-type>
+        <sequence-identity>1</sequence-identity>
+      </column>
+      <column id="12" parent="10" name="USUARIO_NOMBRE">
+        <mandatory>1</mandatory>
+        <data-type>varchar(30)|0</data-type>
+      </column>
+      <column id="13" parent="10" name="USUARIO_CLAVE">
+        <mandatory>1</mandatory>
+        <data-type>varchar(32)|0</data-type>
+      </column>
+      <column id="14" parent="10" name="USUARIO_MAIL">
+        <mandatory>1</mandatory>
+        <data-type>varchar(50)|0</data-type>
+      </column>
+      <index id="15" parent="10" name="usuarios_USUARIO_ID_uindex">
+        <columns>USUARIO_ID</columns>
+        <desc-columns></desc-columns>
+        <unique>1</unique>
+      </index>
+      <key id="16" parent="10" name="PRIMARY">
+        <columns>USUARIO_ID</columns>
+        <primary>1</primary>
+      </key>
+      <key id="17" parent="10" name="usuarios_USUARIO_ID_uindex">
+        <columns>USUARIO_ID</columns>
+        <underlying-index>usuarios_USUARIO_ID_uindex</underlying-index>
+      </key>
+    </database-model>
+  </data-source>
+</component>
