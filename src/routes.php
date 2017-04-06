@@ -13,10 +13,9 @@
 //engancha todos
 $app->any('/', function($req, $res, $args) use($app) {
 
-    if(isset($_SESSION['user']->id))
+    if(isset($_SESSION['userCredentials']['USUARIO_ID']))
     {
-        //return $this->renderer->render($res, 'aindex.php');
-        return $this->renderer->render($response, 'login/login.php', $args);
+        return $res->withStatus(302)->withHeader('Location', 'system');
     }
     else
     {
@@ -28,12 +27,29 @@ $app->any('/', function($req, $res, $args) use($app) {
 //login
 $app->get('/login', function($req, $res) use($app)
 {
-    return $this->renderer->render($res, 'login/login.php');
+    if(isset($_SESSION['userCredentials']['USUARIO_ID']))
+    {
+        return $res->withStatus(302)->withHeader('Location', 'system');
+    }
+    else {
+        return $this->renderer->render($res, 'login/login.php');
+    }
 });
 
+$app->get('/system', function($req, $res) use($app)
+{
+    if(isset($_SESSION['userCredentials']['USUARIO_ID']))
+    {
+        return $this->renderer->render($res, 'system/system.php');
+    }
+    else {
+
+        return $res->withStatus(302)->withHeader('Location', 'login');
+    }
+});
 
 //Check login user
-$app->post('/checkUserCredentials', function($req, $res) use($app){
+$app->get('/checkUserCredentials', function($req, $res) use($app){
 
     //print_r($_POST);
     require_once "../app/controllers/checkUserCredentials.php";

@@ -22,10 +22,10 @@ $user->getData();
 //}
 
 //guardo posición de menú en la variable session
-$_SESSION['menu'] = "aindex";
-
-//para debuggear
-var_dump($_SESSION);
+//$_SESSION['menu'] = "aindex";
+//
+////para debuggear
+//var_dump($_SESSION);
 
 
 

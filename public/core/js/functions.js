@@ -20,7 +20,7 @@ function login(form)
 {
     $.ajax({
         url: 'checkUserCredentials',
-        type: "POST",
+        type: "GET",
         global: true,
         cache:false,
         dataType: "json",
@@ -28,9 +28,14 @@ function login(form)
     success: function(data)
     {
         console.dir(data);
-        if(data.login == "OK")
+
+        $(".modal-body").html(data.mensaje);
+        $('#mensajeModal').modal({ keyboard: false,show: true});
+
+        if(data.alias != "NONE")
         {
-            //window.location.href = "../../indexa.php";
+            //window.location.href = "../indexa.php";
+            setTimeout(function(){window.location.href = "system"},1000);
         }
         else
         {
