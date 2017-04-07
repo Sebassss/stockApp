@@ -13,7 +13,7 @@
 //engancha todos
 $app->any('/', function($req, $res, $args) use($app) {
 
-    if(isset($_SESSION['userCredentials']['USUARIO_ID']))
+    if(isset($_SESSION['userCredentials']['usuario_id']))
     {
         return $res->withStatus(302)->withHeader('Location', 'system');
     }
@@ -27,7 +27,7 @@ $app->any('/', function($req, $res, $args) use($app) {
 //login
 $app->get('/login', function($req, $res) use($app)
 {
-    if(isset($_SESSION['userCredentials']['USUARIO_ID']))
+    if(isset($_SESSION['userCredentials']['usuario_id']))
     {
         return $res->withStatus(302)->withHeader('Location', 'system');
     }
@@ -38,7 +38,7 @@ $app->get('/login', function($req, $res) use($app)
 
 $app->get('/system', function($req, $res) use($app)
 {
-    if(isset($_SESSION['userCredentials']['USUARIO_ID']))
+    if(isset($_SESSION['userCredentials']['usuario_id']))
     {
         return $this->renderer->render($res, 'system/system.php');
     }

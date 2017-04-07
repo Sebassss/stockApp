@@ -10,13 +10,14 @@
  * @version    $Id:$
  */
 
-class Menu extends MySQL {
+class Menu extends MySQL
+{
 
-    public function __construct (){
+    public function __construct()
+    {
         parent::__construct();
     }
 
-    var $mi_miron;
 
     /**
      * Funcion que retorna los permisos de un recurso como menu
@@ -26,50 +27,59 @@ class Menu extends MySQL {
      * @return object|stdClass
      */
 
-    public function GeneraMenu ($parent,$level, $user){
 
 
-        $consulta = "SELECT a.RecursoID, a.Nombre,a.Icon, a.Link, Deriv1.Count as Count FROM Tbl_Recursos a
-                     LEFT OUTER JOIN (SELECT Parent, COUNT(*) AS Count FROM Tbl_Recursos GROUP BY parent) Deriv1 ON a.RecursoID = Deriv1.Parent
-                     LEFT JOIN Tbl_PerfilesRecursos pr on pr.RecursoID = a.RecursoID
-                     LEFT JOIN Tbl_UsuariosPerfiles up on up.PerfilID = pr.PerfilID
-                     WHERE a.Parent =".$parent." and up.UsuarioID = ".$user." group by a.RecursoID,a.Nombre, a.Icon,a.Link, Deriv1.count order by Orden asc";
+    public function DrawMenu()
+    {
+        $sql = "SELECT a.menu_id, a.menu_titulo,a.menu_icon, a.menu_link,a.menu_parent, Deriv1.Count as Count FROM menu a
+                LEFT OUTER JOIN (SELECT menu_parent, COUNT(*) AS Count FROM menu GROUP BY menu_parent) Deriv1 ON a.menu_id = Deriv1.menu_parent
+                order by menu_orden asc";
 
-        $result = $this->Consulta($consulta);
-        echo '<ul class="sidebar-menu">
-		<li class="header">Menu Principal</li>';
-        if($this->num_rows($result)>0)
+        $result = $this->Consulta($sql);
+
+        echo '<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">';
+
+        if ($this->num_rows($result) > 0)
         {
-            while($resultados = $this->fetch_array($result))
+            while ($resultados = $this->fetch_array($result))
             {
-                echo '<li class="treeview">
-            		    <a href="javascript:;"><i class="'.$resultados['Icon'].'"></i><span>'.($resultados['Nombre']).'</span>
-              			    <span class="pull-right-container">';
+                if ($resultados['menu_parent'] == 0)
+                {
+                    if($resultados['Count'] !='')
+                    {
+                        echo '<li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">' . $resultados['menu_titulo'] . ' <span class="caret"></span></a>
+                            <ul class="dropdown-menu">';
+                        $this->Draw_Parents($resultados['menu_id']);
+                        echo '</ul>
+                            </li>';
+                    }
+                    else {
+                        echo '<li><a href="#">' . $resultados['menu_titulo'] . '</a></li>'; //'<li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+                    }
+                }
+                else
+                {
 
-                		       if($resultados['Count']>0) echo '<i class="fa fa-angle-left pull-right"></i>';
-              	echo	   '</span>
-            			</a>';
-                echo Get_Parents($resultados['RecursoID']);
-                echo '</li>';
+                }
+
             }
         }
-        echo '</ul>';
+        echo ' </ul></div>';
     }
-}
 
-function Get_Parents($parent)
-{
-    $db = new MySQL();
-    $result = $db->Consulta("select * from Tbl_Recursos where Parent='$parent' order by Orden asc");
-    if($db->num_rows($result)>0)
+    public function Draw_Parents($parent)
     {
-        echo '<ul class="treeview-menu">';
-        while ($row = $db->fetch_array($result))
+
+        $result = "select * from menu where menu_parent='$parent' order by menu_orden asc";
+        if ($this->num_rows($result) > 0)
         {
-            echo '<li>
-          <a href="' . $row['Link'] . '" ><i class="' . $row['Icon'] . '"></i> ' . ($row['Nombre']) . '</a>
-        </li>';
+            while ($resultados = $this->fetch_array($result))
+            {
+               echo '<li><a href="#">'.$resultados['menu_titulo'].'</a></li>';
+            }
         }
-        echo '</ul>';
     }
+
 }

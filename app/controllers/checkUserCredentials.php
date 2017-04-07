@@ -21,14 +21,14 @@ function checkUsuario()
     $user = $_GET['txt_usr'];
     $pwd = $_GET['txt_pwd'];
 
-    $sql = $db->Consulta("select USUARIO_ID,USUARIO_ESTADO, USUARIO_NOMBRE, USUARIO_ALIAS, USUARIO_CLAVE from usuarios where USUARIO_NOMBRE = '$user' and USUARIO_CLAVE = '$pwd' AND USUARIO_ESTADO = 0");
+    $sql = $db->Consulta("select usuario_id,usuario_estado, usuario_nombre, usuario_alias from usuarios where usuario_nombre = '$user' and usuario_clave = '$pwd' AND usuario_estado = 0");
 
     if($db->num_rows($sql)>0)
     {
         while($row = $db->fetch_array($sql)) {
-            $alias = $row['USUARIO_ALIAS'];
+            $alias = $row['usuario_alias'];
             $estado = "HABILITADO";
-            $mensaje = 'Hola '.$row['USUARIO_ALIAS'].', serás redireccionado en breve.';
+            $mensaje = 'Hola '.$row['usuario_alias'].', serás redireccionado en breve.';
             $_SESSION['userCredentials'] = $row;
         }
     }
