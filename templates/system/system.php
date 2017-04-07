@@ -44,8 +44,8 @@ echo $_SESSION['userCredentials']['USUARIO_ID'];
 
         footer.navbar-default.navbar-fixed-bottom
         {
-            background:red;
-            color:white;
+            background:#e7e7e7;
+            color:black;
             padding:1em 0;
         }
         footer.navbar-default.navbar-fixed-bottom p
@@ -185,13 +185,15 @@ echo $_SESSION['userCredentials']['USUARIO_ID'];
                 <!-- /Boxes de Acoes -->
             </div>
         </section>
-        <footer class="navbar-default navbar-fixed-bottom">
+        <footer class="navbar-default navbar-fixed-bottom text-center">
             <div class="container-fluid">
-                <span>Winning!</span>
+                <span >Sistema de control de stock 2017 - MSP</span>
             </div>
         </footer>
 
     </div>
 </div>
+<script src="framework/js/jquery-2.2.3.min.js"></script>
+<script src="framework/js/bootstrap.min.js"></script>
 </body>
 </html>
