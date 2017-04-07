@@ -187,7 +187,7 @@ echo $_SESSION['userCredentials']['USUARIO_ID'];
         </section>
         <footer class="navbar-default navbar-fixed-bottom text-center">
             <div class="container-fluid">
-                <span >Sistema de control de stock 2017 - MSP</span>
+                <span >Sistema de control de stock 2017 - MSP San Juan - Argentina</span>
             </div>
         </footer>
 
