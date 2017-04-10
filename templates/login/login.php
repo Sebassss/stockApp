@@ -82,7 +82,7 @@ $user->getData();
       </div>
       <div class="row">
         <div style="text-align:right;margin-right:4%;">
-          <button type="button" onclick="javascript:Ingresar();" class="btn btn-primary ">Ingresar</button>
+          <button id="btn_login" type="button" onclick="javascript:Ingresar();" class="btn btn-primary ">Ingresar</button>
         </div>
       </div>
     </form>
@@ -100,6 +100,12 @@ $user->getData();
   {
     login($("#frm_login"));
   }
+
+  $(document).keypress(function(e) {
+    if(e.which == 13) {
+      $("#btn_login").click();
+    }
+  });
 
 </script>
 
