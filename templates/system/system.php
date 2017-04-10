@@ -29,10 +29,15 @@ echo $_SESSION['userCredentials']['usuario_id'];
 
     <style>
 
-
-
         @import "//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css";
         @import "http://fonts.googleapis.com/css?family=Roboto:400,500";
+
+
+        @media (min-width: 767px) {
+            .navbar-nav .dropdown-menu .caret {
+                transform: rotate(-90deg);
+            }
+        }
 
         .box > .icon { text-align: center; position: relative; }
         .box > .icon > .image { position: relative; z-index: 2; margin: auto; width: 88px; height: 88px; border: 8px solid white; line-height: 88px; border-radius: 50%; background: #63B76C; vertical-align: middle; }
