@@ -81,13 +81,16 @@ echo $_SESSION['userCredentials']['usuario_id'];
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">Brand</a>
+                    <a class="navbar-brand" href="#">STOCK MSP</a>
                 </div>
-
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
                 <?php
                 $menu = new Menu();
-                $menu->DrawMenu();
+                $menu->display_children(0,1);
                 ?>
+                </ul>
+                </div>
                 <!-- Collect the nav links, forms, and other content for toggling -->
 
             </div><!-- /.container-fluid -->

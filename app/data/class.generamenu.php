@@ -29,86 +29,43 @@ class Menu extends MySQL
 
 
 
-    public function DrawMenu()
+    function display_children($parent, $level)
     {
-        $sql = "SELECT a.menu_id, a.menu_titulo,a.menu_icon, a.menu_link,a.menu_parent, Deriv1.Count as Count FROM menu a
-                LEFT OUTER JOIN (SELECT menu_parent, COUNT(*) AS Count FROM menu GROUP BY menu_parent) Deriv1 ON a.menu_id = Deriv1.menu_parent
-                order by menu_orden asc";
+
+
+        $sql = "SELECT m.menu_id, m.menu_titulo, m.menu_link,Deriv1.menu_parent, Deriv1.Count, m.menu_icon FROM menu m  
+						   LEFT JOIN (SELECT menu_parent, COUNT(*) AS Count FROM menu GROUP BY menu_parent) 
+						   Deriv1 ON m.menu_id = Deriv1.menu_parent 
+						   where m.menu_parent =" . $parent . " group by m.menu_id order by m.menu_orden";
 
         $result = $this->Consulta($sql);
 
-        echo '<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav">';
-
         if ($this->num_rows($result) > 0)
         {
+
             while ($resultados = $this->fetch_array($result))
             {
-                if ($resultados['menu_parent'] == 0)
-                {
-                    if($resultados['Count'] !='')
+
+                    if($resultados['Count'] >0)
                     {
                         echo '<li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">' . $resultados['menu_titulo'] . ' <span class="caret"></span></a>
                             <ul class="dropdown-menu">';
-                        $this->Draw_Parents($resultados['menu_id']);
-                        //echo '<li><a href="#">' . $resultados['menu_titulo'] . '</a></li>'; //'<li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-                        echo '</ul>
-                            </li>';
+                            $menu = new Menu();
+                            $menu->display_children($resultados['menu_id'], $level + 1);
+                        echo '</li></ul>';
                     }
-                    else {
+                    else if($resultados['Count'] ==0){
                         echo '<li>'.$resultados['Count'].'<a href="#">' . $resultados['menu_titulo'] . '</a></li>'; //'<li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-                        echo $resultados['Count'];
                     }
-                }
-                else
-                {
+                    else;
 
-                }
 
             }
         }
-        echo ' </ul></div>';
+
     }
 
-    public function Draw_Parents($parent)
-    {
 
-        $result = "SELECT a.menu_id, a.menu_titulo,a.menu_icon, a.menu_link,a.menu_parent, Deriv1.Count as Count FROM menu a
-                LEFT OUTER JOIN (SELECT menu_parent, COUNT(*) AS Count FROM menu GROUP BY menu_parent) Deriv1 ON a.menu_id = Deriv1.menu_parent
-                where menu_id = '.$parent.' order by menu_orden asc";
-        if ($this->num_rows($result) > 0)
-        {
-            while ($resultados = $this->fetch_array($result))
-            {
-                if ($resultados['menu_parent'] == 0)
-                {
-                    if ($resultados['Count'] != '')
-                    {
-                        echo '<li class="dropdown-submenu">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">' . $resultados['menu_titulo'] . ' <span class="caret"></span></a>
-                                <ul class="dropdown-menu">';
-                        //echo '<li><a href="#">' . $resultados['menu_titulo'] . '</a></li>';
-                        $this->Draw_Parents($resultados['menu_id']);
-
-                    }
-                    else
-                    {
-                        $this->Draw_Parents($resultados['menu_id']);
-                        //echo '<li><a href="#">' . $resultados['menu_titulo'] . '</a></li>';
-                        echo $resultados['Count'];
-                    }
-
-                }
-                else
-                {
-                    echo '<li><a href="#">'.$resultados['menu_titulo'] . '</a></li>'; //'<li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-
-                }
-
-            }
-
-        }
-    }
 
 }
