@@ -538,6 +538,7 @@ function loadScript(url, callback)
 
 		                                        /****/
                                                 var display;
+												console.dir(obj.Columnas)
 		                                        for(i=0;i<obj.Columnas.length;i++)
 		                                        {
 		                                            switch(obj.Columnas[i].type[0])
