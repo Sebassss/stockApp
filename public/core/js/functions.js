@@ -5,7 +5,7 @@ function loadPage(routes){
 
     $.ajax({
         url: routes,
-        type: "POST",
+        type: "GET",
         global: true,
         cache:false
 

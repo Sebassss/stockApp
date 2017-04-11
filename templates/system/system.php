@@ -178,6 +178,14 @@ echo $_SESSION['userCredentials']['usuario_id'];
 
 
 </div>
+
+<div class="container">
+    <div class="col-12 col-md-12" id="main">
+        <div class="row">
+            <h1>Main</h1>
+        </div>
+    </div>
+</div>
         <footer class="navbar-default navbar-fixed-bottom text-center">
             <div class="container-fluid">
                 <span >Sistema de control de stock 2017 - MSP San Juan - Argentina</span>
@@ -186,8 +194,11 @@ echo $_SESSION['userCredentials']['usuario_id'];
 
 
 
+
 <script src="framework/js/jquery-2.2.3.min.js"></script>
 <script src="framework/js/bootstrap.min.js"></script>
+<script src="core/Grid/Grid.js"></script>
+<script src="core/js/functions.js"></script>
 
 <script>
     $(document).ready(function() {

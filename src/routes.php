@@ -24,6 +24,21 @@ $app->any('/', function($req, $res, $args) use($app) {
 
 });
 
+
+//Rellena la grilla
+$app->post('/abm_getUsuarios', function($req, $res) use($app){
+
+    require_once "../app/controllers/abm_getUsuariosController.php";
+
+    return getDatos();
+});
+//ABM usuarios (retorna vista)
+$app->get('/abm_usuarios', function($req, $res) use($app){
+
+    return $this->renderer->render($res, 'usuarios/abm.usuarios.php');
+});
+
+
 //login
 $app->get('/login', function($req, $res) use($app)
 {
