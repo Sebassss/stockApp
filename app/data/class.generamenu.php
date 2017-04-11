@@ -49,14 +49,14 @@ class Menu extends MySQL
                     if($resultados['Count'] >0)
                     {
                         echo '<li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">' . $resultados['menu_titulo'] . ' <span class="caret"></span></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">'.$resultados['menu_icon'].'&nbsp;&nbsp;&nbsp;'.$resultados['menu_titulo'].' <span class="caret"></span></a>
                             <ul class="dropdown-menu">';
                             $menu = new Menu();
                             $menu->display_children($resultados['menu_id'], $level + 1);
-                        echo '</li></ul>';
+                        echo '</ul></li>';
                     }
                     else if($resultados['Count'] ==0){
-                        echo '<li>'.$resultados['Count'].'<a href="#">' . $resultados['menu_titulo'] . '</a></li>'; //'<li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+                        echo '<li><a href="#">'.$resultados['menu_icon'].'&nbsp;&nbsp;'.$resultados['menu_titulo']. '</a></li>'; //'<li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
                     }
                     else;
 
