@@ -517,7 +517,7 @@ function loadScript(url, callback)
                     doModal : function(obj,accion) 
                               {    		var wnd = false;
                               			var id = $(obj).attr("id");
-                              			//console.log(id)
+                              			console.dir(obj)
                               			switch(accion)
 										{
 											case 0: /*Agregar*/
@@ -538,10 +538,12 @@ function loadScript(url, callback)
 
 		                                        /****/
                                                 var display;
-												console.dir(obj.Columnas)
+
+
 		                                        for(i=0;i<obj.Columnas.length;i++)
 		                                        {
-		                                            switch(obj.Columnas[i].type[0])
+
+		                                            switch(obj.Columnas[i].type)
 		                                            {
 		                                                case "text":
 		                                                {
@@ -551,7 +553,7 @@ function loadScript(url, callback)
                                                             }
                                                             else
                                                             {
-                                                                display = "";
+                                                                //display = "";
                                                             }
 
                                                                 var required = (obj.Columnas[i].required == "true") ? 'required' : '';
@@ -565,7 +567,7 @@ function loadScript(url, callback)
                                                                 html += "  <label for='" + id + "_field_" + obj.Columnas[i].index + "'>" + obj.Columnas[i].name + ":</label>"
                                                                 html += "  <input type='" + obj.Columnas[i].type[0] + "' class='form-control' value='' name='" + id + "_field_" + obj.Columnas[i].index + "' id='" + id + "_field_" + obj.Columnas[i].index + "' placeholder='" + placeholder + "' style='" + obj.Columnas[i].style + "' maxlength='" + obj.Columnas[i].maxlength + "' " + required + " >"
                                                                 html += "</div>"
-
+															console.log("dentra")
 		                                                }break;
 
                                                         case "dropdown":
@@ -628,6 +630,8 @@ function loadScript(url, callback)
 		                                        html += '</div>';  // dialog
 		                                        html += '</div>';  // footer
 		                                        html += '</div>';  // modalWindow
+
+												console.dir(html);
 		                                        $('body').append(html);
 
                                                 for(i=0;i<obj.Columnas.length;i++)
@@ -709,7 +713,7 @@ function loadScript(url, callback)
                                                     var display;
 			                                        for(i=0;i<obj.Columnas.length;i++)
 			                                        {
-			                                            switch(obj.Columnas[i].type[0])
+			                                            switch(obj.Columnas[i].type)
 			                                            {
 			                                                case "text":
 			                                                {
@@ -880,7 +884,7 @@ function loadScript(url, callback)
 			                                        var display;
 			                                        for(i=0;i<obj.Columnas.length;i++)
 			                                        {
-			                                            switch(obj.Columnas[i].type[0])
+			                                            switch(obj.Columnas[i].type)
 			                                            {
 			                                                case "text":
 			                                                {

@@ -8,7 +8,7 @@ jQuery(document).ready(function($)
         {delete: "true"}];
 
     var colheaders = [
-        {index : "menu_id", name: "id", editable: "false",  visible: "true", type: "text",placeholder:"", maxlength: "10", required: "false" },
+        {index : "menu_id", name: "id", editable: "true",  visible: "true", type: "text",placeholder:"", maxlength: "10", required: "true" },
         {index : "apellido", name: "apellido",editable: "true", visible: "true", type: "text", maxlength: "10", required: "false" },
         {index : "nombre", name: "nombre",editable: "true", visible: "true", type: "text", maxlength: "10", required: "true"},
         {index : "otro", name: "otro",editable: "true", visible: "true", type: "text", maxlength: "10", required: "true"}];

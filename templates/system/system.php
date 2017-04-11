@@ -65,7 +65,7 @@ echo $_SESSION['userCredentials']['usuario_id'];
         }
     </style>
 </head>
-<body>
+<body class="body">
 
 
 <div class="container">
