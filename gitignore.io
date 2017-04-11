@@ -1,6 +1,5 @@
-/logs
-.idea
-app/data/db.inc.php
+.idea/
+.app/data/db.inc.php
 composer.json
 composer.lock
 CONTRIBUTING.md
