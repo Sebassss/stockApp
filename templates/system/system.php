@@ -81,7 +81,7 @@ echo $_SESSION['userCredentials']['usuario_id'];
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">STOCK MSP</a>
+                    <a class="navbar-brand" href="#"><b>STOCK MSP</b></a>
                 </div>
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
