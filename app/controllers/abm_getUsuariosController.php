@@ -12,39 +12,39 @@ require_once "../app/data/class.conexion.php";
 
 
 //Elimina registros a partir del modal
-//function delDatos()
-//{
-//
-//    /*Parser para  metodos put y delete*/
-//    parse_str(file_get_contents("php://input"),$post_vars);
-//    //print_r($post_vars);
-//
-//
-//
-//    $db = new MySQL();
-//    $a = $post_vars['table_field_RecursoID'];
-//    $result = $db->consulta("delete from Tbl_Recursos where RecursoID = '$a'");
-//    $mensaje = "No pudo Eliminar.";
-//    $estado = "false";
-//
-//    if(!$result)
-//    {
-//        $mensaje = "Procesado correctamente.";
-//        $estado = "true";
-//    }
-//    else
-//    {
-//        $mensaje = "Error: ".$result;
-//    }
-//
-//    $response = array(
-//        'mensaje' => $mensaje,
-//        'estado' => $estado,
-//    );
-//
-//    echo json_encode($response);
-//
-//}
+function deleteDatos()
+{
+
+    /*Parser para  metodos put y delete*/
+    parse_str(file_get_contents("php://input"),$post_vars);
+    //print_r($post_vars);
+
+
+
+    $db = new MySQL();
+    $a = $post_vars['table_field_rubro_id'];
+    $result = $db->consulta("delete from rubros where rubro_id = '$a'");
+    $mensaje = "No pudo Eliminar.";
+    $estado = "false";
+
+    if(!$result)
+    {
+        $mensaje = "Procesado correctamente.";
+        $estado = "true";
+    }
+    else
+    {
+        $mensaje = "Error: ".$result;
+    }
+
+    $response = array(
+        'mensaje' => $mensaje,
+        'estado' => $estado,
+    );
+
+    echo json_encode($response);
+
+}
 
 //Guarda registros a partir del modal
 //function saveDatos()
@@ -86,9 +86,9 @@ function getDatos()
 {
 
 
-if(isset($_POST['pagesize']))
+if(isset($_GET['pagesize']))
 {
-    $TAMANO_PAGINA = $_POST['pagesize'];
+    $TAMANO_PAGINA = $_GET['pagesize'];
 }
 else
 {
@@ -97,9 +97,9 @@ else
 
 //examino la página a mostrar y el inicio del registro a mostrar
 
-if(isset($_POST['page']))
+if(isset($_GET['page']))
 {
-    $pagina = $_POST["page"];
+    $pagina = $_GET["page"];
     if (!$pagina)
     {
         $inicio = 0;

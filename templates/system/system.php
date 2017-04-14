@@ -53,6 +53,10 @@ echo $_SESSION['userCredentials']['usuario_id'];
         .box > .icon:hover > .info > .more > a { color: #fff; padding: 6px 8px; background-color: #63B76C; }
         .box .space { height: 30px; }
 
+        .navbar-fixed-bottom
+        {
+            position: inherit;
+        }
         footer.navbar-default.navbar-fixed-bottom
         {
             background:#e7e7e7;

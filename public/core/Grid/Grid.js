@@ -63,7 +63,7 @@ function loadScript(url, callback)
                         $.ajax({
                             url: url,
                             dataType: "json",
-                            method: "post",
+                            method: "get",
                             //async:false,
                             success: function(response)
                             {
@@ -517,7 +517,6 @@ function loadScript(url, callback)
                     doModal : function(obj,accion) 
                               {    		var wnd = false;
                               			var id = $(obj).attr("id");
-                              			console.dir(obj)
                               			switch(accion)
 										{
 											case 0: /*Agregar*/
@@ -547,13 +546,13 @@ function loadScript(url, callback)
 		                                            {
 		                                                case "text":
 		                                                {
-                                                            if(obj.Columnas[i].editable !="true")
+                                                            if(obj.Columnas[i].visible !="true")
                                                             {
                                                                 display = "display:none";
                                                             }
                                                             else
                                                             {
-                                                                //display = "";
+                                                                display = "";
                                                             }
 
                                                                 var required = (obj.Columnas[i].required == "true") ? 'required' : '';
@@ -565,14 +564,14 @@ function loadScript(url, callback)
                                                                 }
                                                                 html += "<div class='form-group' style='"+display+"'>"
                                                                 html += "  <label for='" + id + "_field_" + obj.Columnas[i].index + "'>" + obj.Columnas[i].name + ":</label>"
-                                                                html += "  <input type='" + obj.Columnas[i].type[0] + "' class='form-control' value='' name='" + id + "_field_" + obj.Columnas[i].index + "' id='" + id + "_field_" + obj.Columnas[i].index + "' placeholder='" + placeholder + "' style='" + obj.Columnas[i].style + "' maxlength='" + obj.Columnas[i].maxlength + "' " + required + " >"
+                                                                html += "  <input type='" + obj.Columnas[i].type + "' class='form-control' value='' name='" + id + "_field_" + obj.Columnas[i].index + "' id='" + id + "_field_" + obj.Columnas[i].index + "' placeholder='" + placeholder + "' style='" + obj.Columnas[i].style + "' maxlength='" + obj.Columnas[i].maxlength + "' " + required + " >"
                                                                 html += "</div>"
-															console.log("dentra")
+
 		                                                }break;
 
                                                         case "dropdown":
                                                         {
-
+															console.log("dentra")
                                                             if(obj.Columnas[i].editable !="true")
                                                             {
                                                                 display = "display:none";
@@ -646,7 +645,8 @@ function loadScript(url, callback)
                                                             {
                                                                 var campo = obj.Columnas[i].index;
                                                                 var dato = "";//; data[i];
-                                                                var url = obj.Columnas[i].type[1];
+                                                                var url = obj.Columnas[i].url;
+																console.log("hola");
                                                                 methods.DropDownFill(id, campo, dato, url, accion);
                                                             }break;
 

@@ -23,7 +23,7 @@ function deleteDatos()
 
     $db = new MySQL();
     $a = $post_vars['table_field_rubro_id'];
-    $result = $db->consulta("delete from rubros where rubro_id = '$a'");
+    $result = $db->consulta("delete from marcas where marca_id = '$a'");
     $mensaje = "No pudo Eliminar.";
     $estado = "false";
 
@@ -57,9 +57,9 @@ function editDatos()
 
 
     $db = new MySQL();
-    $a = $post_vars['table_field_rubro_id'];
-    $b = $post_vars['table_field_rubro_nombre'];
-    $result = $db->consulta("update rubros set rubro_nombre= '$b'  where rubro_id = '$a'");
+    $a = $post_vars['table_field_marca_id'];
+    $b = $post_vars['table_field_marca_nombre'];
+    $result = $db->consulta("update marcas set marca_nombre= '$b'  where marca_id = '$a'");
     $mensaje = "No pudo editar.";
     $estado = "false";
 
@@ -88,10 +88,10 @@ function saveDatos()
     $db = new MySQL();
     //print_r( $_POST);
 
-    $a = $_POST['table_field_rubro_nombre'];
+    $a = $_POST['table_field_marca_nombre'];
 
 
-    $result = $db->consulta("insert into rubros (rubro_nombre) values ('$a')");
+    $result = $db->consulta("insert into marcas (marca_nombre) values ('$a')");
 
 
     $mensaje = "No pudo guardar.";
@@ -154,12 +154,12 @@ else
 
 $db = new MySQL();
 
-$consulta = $db->Consulta("select rubro_id, rubro_nombre from rubros");
+$consulta = $db->Consulta("select marca_id, marca_nombre, marca_detalle from marcas");
 $num_total_registros = $db->num_rows($consulta);
 $total_paginas = ceil($num_total_registros / $TAMANO_PAGINA);
 
 
-$consulta = $db->Consulta("select rubro_id, rubro_nombre from rubros limit ". $inicio. ",". $TAMANO_PAGINA.";");
+$consulta = $db->Consulta("select marca_id, marca_nombre,marca_detalle from marcas limit ". $inicio. ",". $TAMANO_PAGINA.";");
 
 $x = array();
 
@@ -203,4 +203,20 @@ echo json_encode($elresultado);
 
 }
 
-?>
+
+function getRubros()
+{
+    $db = new MySQL();
+
+    $consulta = $db->Consulta("SELECT  a.rubro_nombre, a.rubro_id  FROM rubros a");
+
+    $i = 0;
+    $x = array();
+    while ($row = $db->fetch_array($consulta)) {
+        $x[$i] = array("value" => $row['rubro_id'], "text" => $row['rubro_nombre']);
+        $i++;
+    }
+
+    echo json_encode($x);
+
+}
