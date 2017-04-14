@@ -25,7 +25,7 @@ $app->any('/', function($req, $res, $args) use($app) {
 });
 
 
-//Rellena la grilla
+//Rellena la grilla usuarios
 $app->post('/abm_getUsuarios', function($req, $res) use($app){
 
     require_once "../app/controllers/abm_getUsuariosController.php";
@@ -36,6 +36,19 @@ $app->post('/abm_getUsuarios', function($req, $res) use($app){
 $app->get('/abm_usuarios', function($req, $res) use($app){
 
     return $this->renderer->render($res, 'usuarios/abm.usuarios.php');
+});
+
+//Rellena la grilla usuarios
+$app->post('/abm_getRubros', function($req, $res) use($app){
+
+    require_once "../app/controllers/abm_getRubrosController.php";
+
+    return getDatos();
+});
+//ABM usuarios (retorna vista)
+$app->get('/abm_rubros', function($req, $res) use($app){
+
+    return $this->renderer->render($res, 'rubros/abm.rubros.php');
 });
 
 
