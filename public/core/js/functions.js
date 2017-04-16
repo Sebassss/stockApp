@@ -15,6 +15,20 @@ function loadPage(routes){
     });
 }
 
+function loadPage_reload(routes){
+
+    $.ajax({
+        url: routes,
+        type: "GET",
+        global: true,
+        cache:false
+
+    }).done(function(data) {
+
+        window.location.reload();
+    });
+}
+
 
 function login(form)
 {

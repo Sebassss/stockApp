@@ -172,6 +172,13 @@ $app->get('/abm_marcas', function($req, $res) use($app){
         }
     });
 
+//CERRAR SESION
+$app->get('/cerrar_sesion', function($req, $res) use($app){
+    unset($_SESSION['userCredentials']);
+    session_destroy();
+    return $res->withStatus(302)->withHeader('Location', 'login');
+});
+
 /*CHEQUEO DE USUARIO EXISTENTE*/
     $app->get('/checkUserCredentials', function($req, $res) use($app){
         require_once "../app/controllers/checkUserCredentials.php";
@@ -182,83 +189,140 @@ $app->get('/abm_marcas', function($req, $res) use($app){
 
 /*PROVEEDORES*/
 //OBTENGO PROVEEDORES
-$app->get('/abm_getProveedores', function($req, $res) use($app){
-    require_once "../app/controllers/abm_getProveedoresController.php";
-    return getDatos();
-});
+    $app->get('/abm_getProveedores', function($req, $res) use($app){
+        require_once "../app/controllers/abm_getProveedoresController.php";
+        return getDatos();
+    });
 
-//GUARDA PROVEEDORES
-$app->post('/abm_getProveedores', function($req, $res) use($app){
-    require_once "../app/controllers/abm_getProveedoresController.php";
-    return saveDatos();
-});
+    //GUARDA PROVEEDORES
+    $app->post('/abm_getProveedores', function($req, $res) use($app){
+        require_once "../app/controllers/abm_getProveedoresController.php";
+        return saveDatos();
+    });
 
-//BORRA PROVEEDORES
-$app->delete('/abm_getProveedores', function($req, $res) use($app){
-    require_once "../app/controllers/abm_getProveedoresController.php";
-    return deleteDatos();
-});
+    //BORRA PROVEEDORES
+    $app->delete('/abm_getProveedores', function($req, $res) use($app){
+        require_once "../app/controllers/abm_getProveedoresController.php";
+        return deleteDatos();
+    });
 
-//EDITA PROVEEDORES
-$app->put('/abm_getProveedores', function($req, $res) use($app){
-    require_once "../app/controllers/abm_getProveedoresController.php";
-    return editDatos();
-});
+    //EDITA PROVEEDORES
+    $app->put('/abm_getProveedores', function($req, $res) use($app){
+        require_once "../app/controllers/abm_getProveedoresController.php";
+        return editDatos();
+    });
 
-//VISTA PROVEEDORES
-$app->get('/abm_proveedores', function($req, $res) use($app){
-    return $this->renderer->render($res, 'proveedores/abm.proveedores.php');
-});
+    //VISTA PROVEEDORES
+    $app->get('/abm_proveedores', function($req, $res) use($app){
+        return $this->renderer->render($res, 'proveedores/abm.proveedores.php');
+    });
 
 /*FIN PROVEEDORES*/
 
 
 /*ARTICULOS*/
 //OBTENGO ARTICULOS
-$app->get('/abm_getArticulos', function($req, $res) use($app){
-    require_once "../app/controllers/abm_getArticulosController.php";
-    return getDatos();
-});
+    $app->get('/abm_getArticulos', function($req, $res) use($app){
+        require_once "../app/controllers/abm_getArticulosController.php";
+        return getDatos();
+    });
 
-//GUARDA ARTICULOS
-$app->post('/abm_getArticulos', function($req, $res) use($app){
-    require_once "../app/controllers/abm_getArticulosController.php";
-    return saveDatos();
-});
+    //GUARDA ARTICULOS
+    $app->post('/abm_getArticulos', function($req, $res) use($app){
+        require_once "../app/controllers/abm_getArticulosController.php";
+        return saveDatos();
+    });
 
-//BORRA ARTICULOS
-$app->delete('/abm_getArticulos', function($req, $res) use($app){
-    require_once "../app/controllers/abm_getArticulosController.php";
-    return deleteDatos();
-});
+    //BORRA ARTICULOS
+    $app->delete('/abm_getArticulos', function($req, $res) use($app){
+        require_once "../app/controllers/abm_getArticulosController.php";
+        return deleteDatos();
+    });
 
-//BORRA ARTICULOS
-$app->put('/abm_getArticulos', function($req, $res) use($app){
-    require_once "../app/controllers/abm_getArticulosController.php";
-    return editDatos();
-});
+    //BORRA ARTICULOS
+    $app->put('/abm_getArticulos', function($req, $res) use($app){
+        require_once "../app/controllers/abm_getArticulosController.php";
+        return editDatos();
+    });
 
-//OBTIENE MARCAS RUBROS - DROPDOWN
-$app->get('/abm_getArticulosRubros', function($req, $res) use($app){
-    require_once "../app/controllers/abm_getArticulosController.php";
-    return getRubros();
-});
+    //OBTIENE MARCAS RUBROS - DROPDOWN
+    $app->get('/abm_getArticulosRubros', function($req, $res) use($app){
+        require_once "../app/controllers/abm_getArticulosController.php";
+        return getRubros();
+    });
 
-//OBTIENE MARCAS RUBROS - DROPDOWN
-$app->get('/abm_getArticulosMarcas', function($req, $res) use($app){
-    require_once "../app/controllers/abm_getArticulosController.php";
-    return getMarcas();
-});
+    //OBTIENE MARCAS RUBROS - DROPDOWN
+    $app->get('/abm_getArticulosMarcas', function($req, $res) use($app){
+        require_once "../app/controllers/abm_getArticulosController.php";
+        return getMarcas();
+    });
 
-//OBTIENE MARCAS RUBROS - DROPDOWN
-$app->get('/abm_getArticulosProveedor', function($req, $res) use($app){
-    require_once "../app/controllers/abm_getArticulosController.php";
-    return getProveedor();
-});
+    //OBTIENE MARCAS RUBROS - DROPDOWN
+    $app->get('/abm_getArticulosProveedor', function($req, $res) use($app){
+        require_once "../app/controllers/abm_getArticulosController.php";
+        return getProveedor();
+    });
 
-//VISTA ARTICULOS
-$app->get('/abm_articulos', function($req, $res) use($app){
-    return $this->renderer->render($res, 'articulos/abm.articulos.php');
-});
+    //VISTA ARTICULOS
+    $app->get('/abm_articulos', function($req, $res) use($app){
+        return $this->renderer->render($res, 'articulos/abm.articulos.php');
+    });
 
 /*FIN ARTICULOS*/
+
+
+/*MOVIMIENTOS*/
+//OBTENGO MOVIMIENTOS
+    $app->get('/abm_getMovimientos', function($req, $res) use($app){
+        require_once "../app/controllers/abm_getMovimientosController.php";
+        return getDatos();
+    });
+
+    //GUARDA MOVIMIENTOS
+    $app->post('/abm_getMovimientos', function($req, $res) use($app){
+        require_once "../app/controllers/abm_getMovimientosController.php";
+        return saveDatos();
+    });
+
+    //BORRA MOVIMIENTOS
+    $app->delete('/abm_getMovimientos', function($req, $res) use($app){
+        require_once "../app/controllers/abm_getMovimientosController.php";
+        return deleteDatos();
+    });
+
+    //BORRA MOVIMIENTOS
+    $app->put('/abm_getMovimientos', function($req, $res) use($app){
+        require_once "../app/controllers/abm_getMovimientosController.php";
+        return editDatos();
+    });
+
+    //OBTIENE PROVEEDORES
+    $app->get('/abm_getMovimientosProveedor', function($req, $res) use($app){
+        require_once "../app/controllers/abm_getMovimientosController.php";
+        return getProveedor();
+    });
+
+    //OBTIENE ARTICULOS
+    $app->get('/abm_getMovimientosArticulos', function($req, $res) use($app){
+        require_once "../app/controllers/abm_getMovimientosController.php";
+        return getArticulos();
+    });
+
+    //OBTIENE OPERACION
+    $app->get('/abm_getMovimientosOperacion', function($req, $res) use($app){
+        require_once "../app/controllers/abm_getMovimientosController.php";
+        return getOperacion();
+    });
+
+    //OBTIENE OPERACION
+    $app->get('/abm_getMovimientosDeposito', function($req, $res) use($app){
+        require_once "../app/controllers/abm_getMovimientosController.php";
+        return getDeposito();
+    });
+
+    //VISTA MOVIMIENTOS
+    $app->get('/abm_movimientos', function($req, $res) use($app){
+        return $this->renderer->render($res, 'movimientos/abm.movimientos.php');
+    });
+
+/*FIN MOVIMIENTOS*/
