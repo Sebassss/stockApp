@@ -814,7 +814,7 @@ function loadScript(url, callback)
                                                             {
                                                                 var campo = obj.Columnas[i].index;
                                                                 var dato =  data[i];
-                                                                var url = obj.Columnas[i].type[1];
+                                                                var url = obj.Columnas[i].url;
                                                                 methods.DropDownFill(id, campo, dato, url, accion);
                                                             }break;
 
@@ -980,7 +980,7 @@ function loadScript(url, callback)
                                                             {
                                                                 var campo = obj.Columnas[i].index;
                                                                 var dato =  data[i];
-                                                                var url = obj.Columnas[i].type[1];
+                                                                var url = obj.Columnas[i].url;
                                                                 methods.DropDownFill(id, campo, dato, url, accion);
                                                             }break;
 

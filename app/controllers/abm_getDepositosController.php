@@ -57,11 +57,10 @@ function editDatos()
 
 
     $db = new MySQL();
-    $a = $post_vars['table_field_marca_id'];
-    $b = $post_vars['table_field_marca_nombre'];
-    $c = $post_vars['table_field_rubro_id'];
-    $d = $post_vars['table_field_marca_detalle'];
-    $result = $db->consulta("update marcas set marca_nombre= '$b', marca_detalle='$d', rubro_id='$c'  where marca_id = '$a'");
+    $a = $post_vars['table_field_deposito_id'];
+    $b = $post_vars['table_field_deposito_nombre'];
+    $c = $post_vars['table_field_deposito_detalle'];
+    $result = $db->consulta("update depositos set deposito_nombre= '$b', deposito_detalle='$c'  where deposito_id = '$a'");
     $mensaje = "No pudo editar.";
     $estado = "false";
 
@@ -90,12 +89,11 @@ function saveDatos()
     $db = new MySQL();
     //print_r( $_POST);
 
-    $a = $_POST['table_field_marca_nombre'];
-    $b = $_POST['table_field_rubro_id'];
-    $c = $_POST['table_field_marca_detalle'];
+    $a = $_POST['table_field_deposito_nombre'];
+    $b = $_POST['table_field_deposito_detalle'];
 
 
-    $result = $db->consulta("insert into marcas (marca_nombre, rubro_id, marca_detalle) values ('$a','$b','$c')");
+    $result = $db->consulta("insert into depositos (deposito_nombre, deposito_detalle) values ('$a','$b')");
 
 
     $mensaje = "No pudo guardar.";
@@ -124,9 +122,9 @@ function getDatos()
 {
 
 
-if(isset($_POST['pagesize']))
+if(isset($_GET['pagesize']))
 {
-    $TAMANO_PAGINA = $_POST['pagesize'];
+    $TAMANO_PAGINA = $_GET['pagesize'];
 }
 else
 {
@@ -135,9 +133,9 @@ else
 
 //examino la página a mostrar y el inicio del registro a mostrar
 
-if(isset($_POST['page']))
+if(isset($_GET['page']))
 {
-    $pagina = $_POST["page"];
+    $pagina = $_GET["page"];
     if (!$pagina)
     {
         $inicio = 0;
@@ -158,12 +156,12 @@ else
 
 $db = new MySQL();
 
-$consulta = $db->Consulta("select marca_id,rubro_id, marca_nombre, marca_detalle from marcas");
+$consulta = $db->Consulta("select deposito_id,deposito_nombre, deposito_detalle from depositos");
 $num_total_registros = $db->num_rows($consulta);
 $total_paginas = ceil($num_total_registros / $TAMANO_PAGINA);
 
 
-$consulta = $db->Consulta("select marca_id,rubro_id, marca_nombre,marca_detalle from marcas limit ". $inicio. ",". $TAMANO_PAGINA.";");
+$consulta = $db->Consulta("select deposito_id,deposito_nombre, deposito_detalle from depositos limit ". $inicio. ",". $TAMANO_PAGINA.";");
 
 $x = array();
 
@@ -208,19 +206,3 @@ echo json_encode($elresultado);
 }
 
 
-function getRubros()
-{
-    $db = new MySQL();
-
-    $consulta = $db->Consulta("SELECT  a.rubro_nombre, a.rubro_id  FROM rubros a");
-
-    $i = 0;
-    $x = array();
-    while ($row = $db->fetch_array($consulta)) {
-        $x[$i] = array("value" => $row['rubro_id'], "text" => $row['rubro_nombre']);
-        $i++;
-    }
-
-    echo json_encode($x);
-
-}

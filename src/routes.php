@@ -45,6 +45,38 @@ $app->any('/', function($req, $res, $args) use($app) {
     });
 
 
+/*DEPOSITOS*/
+//OBTENGO DEPOSITOS
+$app->get('/abm_getDepositos', function($req, $res) use($app){
+    require_once "../app/controllers/abm_getDepositosController.php";
+    return getDatos();
+});
+
+//GUARDA DEPOSITOS
+$app->post('/abm_getDepositos', function($req, $res) use($app){
+    require_once "../app/controllers/abm_getDepositosController.php";
+    return saveDatos();
+});
+
+//BORRA DEPOSITOS
+$app->delete('/abm_getDepositos', function($req, $res) use($app){
+    require_once "../app/controllers/abm_getDepositosController.php";
+    return deleteDatos();
+});
+
+//EDITA DEPOSITOS
+$app->put('/abm_getDepositos', function($req, $res) use($app){
+    require_once "../app/controllers/abm_getDepositosController.php";
+    return editDatos();
+});
+
+//VISTA DEPOSITOS
+$app->get('/abm_depositos', function($req, $res) use($app){
+    return $this->renderer->render($res, 'depositos/abm.depositos.php');
+});
+
+/*FIN DEPOSITOS*/
+
 /*RUBROS*/
     //OBTENGO RUBROS
     $app->get('/abm_getRubros', function($req, $res) use($app){
@@ -64,7 +96,7 @@ $app->any('/', function($req, $res, $args) use($app) {
         return deleteDatos();
     });
 
-    //BORRA RUBROS
+    //EDITA RUBROS
     $app->put('/abm_getRubros', function($req, $res) use($app){
         require_once "../app/controllers/abm_getRubrosController.php";
         return editDatos();
@@ -146,3 +178,87 @@ $app->get('/abm_marcas', function($req, $res) use($app){
         return checkUsuario();
 
     });
+
+
+/*PROVEEDORES*/
+//OBTENGO PROVEEDORES
+$app->get('/abm_getProveedores', function($req, $res) use($app){
+    require_once "../app/controllers/abm_getProveedoresController.php";
+    return getDatos();
+});
+
+//GUARDA PROVEEDORES
+$app->post('/abm_getProveedores', function($req, $res) use($app){
+    require_once "../app/controllers/abm_getProveedoresController.php";
+    return saveDatos();
+});
+
+//BORRA PROVEEDORES
+$app->delete('/abm_getProveedores', function($req, $res) use($app){
+    require_once "../app/controllers/abm_getProveedoresController.php";
+    return deleteDatos();
+});
+
+//EDITA PROVEEDORES
+$app->put('/abm_getProveedores', function($req, $res) use($app){
+    require_once "../app/controllers/abm_getProveedoresController.php";
+    return editDatos();
+});
+
+//VISTA PROVEEDORES
+$app->get('/abm_proveedores', function($req, $res) use($app){
+    return $this->renderer->render($res, 'proveedores/abm.proveedores.php');
+});
+
+/*FIN PROVEEDORES*/
+
+
+/*ARTICULOS*/
+//OBTENGO ARTICULOS
+$app->get('/abm_getArticulos', function($req, $res) use($app){
+    require_once "../app/controllers/abm_getArticulosController.php";
+    return getDatos();
+});
+
+//GUARDA ARTICULOS
+$app->post('/abm_getArticulos', function($req, $res) use($app){
+    require_once "../app/controllers/abm_getArticulosController.php";
+    return saveDatos();
+});
+
+//BORRA ARTICULOS
+$app->delete('/abm_getArticulos', function($req, $res) use($app){
+    require_once "../app/controllers/abm_getArticulosController.php";
+    return deleteDatos();
+});
+
+//BORRA ARTICULOS
+$app->put('/abm_getArticulos', function($req, $res) use($app){
+    require_once "../app/controllers/abm_getArticulosController.php";
+    return editDatos();
+});
+
+//OBTIENE MARCAS RUBROS - DROPDOWN
+$app->get('/abm_getArticulosRubros', function($req, $res) use($app){
+    require_once "../app/controllers/abm_getArticulosController.php";
+    return getRubros();
+});
+
+//OBTIENE MARCAS RUBROS - DROPDOWN
+$app->get('/abm_getArticulosMarcas', function($req, $res) use($app){
+    require_once "../app/controllers/abm_getArticulosController.php";
+    return getMarcas();
+});
+
+//OBTIENE MARCAS RUBROS - DROPDOWN
+$app->get('/abm_getArticulosProveedor', function($req, $res) use($app){
+    require_once "../app/controllers/abm_getArticulosController.php";
+    return getProveedor();
+});
+
+//VISTA ARTICULOS
+$app->get('/abm_articulos', function($req, $res) use($app){
+    return $this->renderer->render($res, 'articulos/abm.articulos.php');
+});
+
+/*FIN ARTICULOS*/

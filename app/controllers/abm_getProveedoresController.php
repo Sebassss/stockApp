@@ -22,8 +22,8 @@ function deleteDatos()
 
 
     $db = new MySQL();
-    $a = $post_vars['table_field_rubro_id'];
-    $result = $db->consulta("delete from marcas where marca_id = '$a'");
+    $a = $post_vars['table_field_proveedor_id'];
+    $result = $db->consulta("delete from proveedores where proveedor_id = '$a'");
     $mensaje = "No pudo Eliminar.";
     $estado = "false";
 
@@ -57,11 +57,17 @@ function editDatos()
 
 
     $db = new MySQL();
-    $a = $post_vars['table_field_marca_id'];
-    $b = $post_vars['table_field_marca_nombre'];
-    $c = $post_vars['table_field_rubro_id'];
-    $d = $post_vars['table_field_marca_detalle'];
-    $result = $db->consulta("update marcas set marca_nombre= '$b', marca_detalle='$d', rubro_id='$c'  where marca_id = '$a'");
+    $a = $post_vars['table_field_proveedor_id'];
+    $b = $post_vars['table_field_proveedor_nombre'];
+    $c = $post_vars['table_field_proveedor_apellido'];
+    $d = $post_vars['table_field_proveedor_tel'];
+    $e = $post_vars['table_field_proveedor_cel'];
+    $f = $post_vars['table_field_proveedor_empresa'];
+    $g = $post_vars['table_field_proveedor_domicilio'];
+    $h = $post_vars['table_field_proveedor_cuit'];
+    $i = $post_vars['table_field_proveedor_cuil'];
+
+    $result = $db->consulta("update proveedores set proveedor_nombre= '$b', proveedor_apellido='$c', proveedor_tel='$d', proveedor_cel = '$e', proveedor_empresa= '$f', proveedor_domicilio='$g', proveedor_cuit='$h', proveedor_cuil='$i'  where proveedor_id = '$a'");
     $mensaje = "No pudo editar.";
     $estado = "false";
 
@@ -90,12 +96,17 @@ function saveDatos()
     $db = new MySQL();
     //print_r( $_POST);
 
-    $a = $_POST['table_field_marca_nombre'];
-    $b = $_POST['table_field_rubro_id'];
-    $c = $_POST['table_field_marca_detalle'];
+    $a = $_POST['table_field_proveedor_nombre'];
+    $b = $_POST['table_field_proveedor_apellido'];
+    $c = $_POST['table_field_proveedor_tel'];
+    $d = $_POST['table_field_proveedor_cel'];
+    $e = $_POST['table_field_proveedor_empresa'];
+    $f = $_POST['table_field_proveedor_domicilio'];
+    $g = $_POST['table_field_proveedor_cuit'];
+    $h = $_POST['table_field_proveedor_cuil'];
 
 
-    $result = $db->consulta("insert into marcas (marca_nombre, rubro_id, marca_detalle) values ('$a','$b','$c')");
+    $result = $db->consulta("insert into proveedores (proveedor_nombre, proveedor_apellido,proveedor_tel,proveedor_cel, proveedor_empresa,proveedor_domicilio,proveedor_cuit,proveedor_cuil) values ('$a','$b','$c','$d','$e','$f','$g','$h')");
 
 
     $mensaje = "No pudo guardar.";
@@ -124,9 +135,9 @@ function getDatos()
 {
 
 
-if(isset($_POST['pagesize']))
+if(isset($_GET['pagesize']))
 {
-    $TAMANO_PAGINA = $_POST['pagesize'];
+    $TAMANO_PAGINA = $_GET['pagesize'];
 }
 else
 {
@@ -135,9 +146,9 @@ else
 
 //examino la página a mostrar y el inicio del registro a mostrar
 
-if(isset($_POST['page']))
+if(isset($_GET['page']))
 {
-    $pagina = $_POST["page"];
+    $pagina = $_GET["page"];
     if (!$pagina)
     {
         $inicio = 0;
@@ -158,12 +169,12 @@ else
 
 $db = new MySQL();
 
-$consulta = $db->Consulta("select marca_id,rubro_id, marca_nombre, marca_detalle from marcas");
+$consulta = $db->Consulta("select * from proveedores");
 $num_total_registros = $db->num_rows($consulta);
 $total_paginas = ceil($num_total_registros / $TAMANO_PAGINA);
 
 
-$consulta = $db->Consulta("select marca_id,rubro_id, marca_nombre,marca_detalle from marcas limit ". $inicio. ",". $TAMANO_PAGINA.";");
+$consulta = $db->Consulta("select * from proveedores limit ". $inicio. ",". $TAMANO_PAGINA.";");
 
 $x = array();
 
@@ -208,19 +219,3 @@ echo json_encode($elresultado);
 }
 
 
-function getRubros()
-{
-    $db = new MySQL();
-
-    $consulta = $db->Consulta("SELECT  a.rubro_nombre, a.rubro_id  FROM rubros a");
-
-    $i = 0;
-    $x = array();
-    while ($row = $db->fetch_array($consulta)) {
-        $x[$i] = array("value" => $row['rubro_id'], "text" => $row['rubro_nombre']);
-        $i++;
-    }
-
-    echo json_encode($x);
-
-}
