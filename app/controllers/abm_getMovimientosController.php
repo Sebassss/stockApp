@@ -92,13 +92,14 @@ function saveDatos()
     $db = new MySQL();
     //print_r( $_POST);
 
-    $a = $_POST['table_field_proveedor_id'];
-    $b = $_POST['table_field_articulo_id'];
-    $c = $_POST['table_field_operacion'];
-    $d = $_POST['table_field_cantidad'];
+    $a = $_POST['table_field_deposito_id'];
+    $b = $_POST['table_field_proveedor_id'];
+    $c = $_POST['table_field_articulo_id'];
+    $d = $_POST['table_field_operacion'];
+    $e = $_POST['table_field_cantidad'];
 
 
-    $result = $db->consulta("insert into movimientos (proveedor_id, articulo_id,operacion,cantidad) values ('$a','$b','$c','$d')");
+    $result = $db->consulta("insert into movimientos (deposito_id,proveedor_id, articulo_id,operacion,cantidad) values ('$a','$b','$c','$d','$e')");
 
 
     $mensaje = "No pudo guardar.";
@@ -161,12 +162,18 @@ else
 
 $db = new MySQL();
 
-$consulta = $db->Consulta("select * from movimientos");
+$consulta = $db->Consulta("select m.movimiento_id, m.deposito_id,d.deposito_nombre, m.proveedor_id,p.proveedor_nombre, m.articulo_id,a.articulo_nombre, (case  m.operacion when 0 then 'INGRESO' when 1 then 'EGRESO' end) as operacion , m.cantidad from movimientos m 
+                           left join depositos d on d.deposito_id = m.deposito_id 
+                           left join proveedores p on p.proveedor_id = m.proveedor_id
+                           left join articulos a on a.articulo_id = m.articulo_id");
 $num_total_registros = $db->num_rows($consulta);
 $total_paginas = ceil($num_total_registros / $TAMANO_PAGINA);
 
 
-$consulta = $db->Consulta("select * from movimientos limit ". $inicio. ",". $TAMANO_PAGINA.";");
+$consulta = $db->Consulta("select m.movimiento_id, m.deposito_id,d.deposito_nombre, m.proveedor_id,p.proveedor_nombre, m.articulo_id,a.articulo_nombre, (case  m.operacion when 0 then 'INGRESO' when 1 then 'EGRESO' end) as operacion, m.cantidad from movimientos m 
+                           left join depositos d on d.deposito_id = m.deposito_id 
+                           left join proveedores p on p.proveedor_id = m.proveedor_id
+                           left join articulos a on a.articulo_id = m.articulo_id limit ". $inicio. ",". $TAMANO_PAGINA.";");
 
 $x = array();
 
@@ -268,8 +275,8 @@ function getOperacion()
     $x = array();
 
 
-    $x[0] = array("value" => "0", "text" => "Suma");
-    $x[1] = array("value" => "1", "text" => "Resta");
+    $x[0] = array("value" => "0", "text" => "INGRESO");
+    $x[1] = array("value" => "1", "text" => "EGRESO");
 
 
     echo json_encode($x);

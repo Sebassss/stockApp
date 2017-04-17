@@ -12,6 +12,8 @@ function loadPage(routes){
     }).done(function(data) {
 
         $("#main").html(data);
+        $("html, body").delay(500).animate({scrollTop: $('#main').offset().top }, 1000);
+
     });
 }
 
