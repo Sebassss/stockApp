@@ -39,6 +39,16 @@ echo $_SESSION['userCredentials']['usuario_id'];
             }
         }
 
+        body .modal {
+            /* new custom width */
+            width: 50%;
+            /* must be half of the width, minus scrollbar on the left (30px) */
+            margin: 0 auto;
+            overflow-y: auto;
+        }
+
+
+
         .box > .icon { text-align: center; position: relative; }
         .box > .icon > .image { position: relative; z-index: 2; margin: auto; width: 88px; height: 88px; border: 8px solid white; line-height: 88px; border-radius: 50%; background: #63B76C; vertical-align: middle; }
         .box > .icon:hover > .image { background: #333; }
@@ -55,10 +65,13 @@ echo $_SESSION['userCredentials']['usuario_id'];
 
         .navbar-fixed-bottom
         {
-            position: inherit;
+            position: relative;
         }
+
+
         footer.navbar-default.navbar-fixed-bottom
         {
+
             background:#e7e7e7;
             color:black;
             padding:1em 0;

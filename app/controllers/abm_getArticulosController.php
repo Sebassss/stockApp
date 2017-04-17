@@ -63,7 +63,8 @@ function editDatos()
     $d = $post_vars['table_field_articulo_nombre'];
     $e = $post_vars['table_field_articulo_detalle'];
     $f = $post_vars['table_field_proveedor_id'];
-    $result = $db->consulta("update articulos set articulo_nombre= '$d', articulo_detalle='$e', rubro_id='$c', marca_id='$b',proveedor_id='$f'  where articulo_id = '$a'");
+    $g = $post_vars['table_field_articulo_codigo'];
+    $result = $db->consulta("update articulos set articulo_nombre= '$d', articulo_detalle='$e', rubro_id='$c', marca_id='$b',proveedor_id='$f', articulo_codigo='$g'  where articulo_id = '$a'");
     $mensaje = "No pudo editar.";
     $estado = "false";
 
@@ -97,9 +98,10 @@ function saveDatos()
     $c = $_POST['table_field_rubro_id'];
     $d = $_POST['table_field_articulo_detalle'];
     $e = $_POST['table_field_proveedor_id'];
+    $f = $_POST['table_field_articulo_codigo'];
 
 
-    $result = $db->consulta("insert into articulos (articulo_nombre, marca_id,rubro_id, articulo_detalle,proveedor_id) values ('$a','$b','$c','$d','$e')");
+    $result = $db->consulta("insert into articulos (articulo_nombre, marca_id,rubro_id, articulo_detalle,proveedor_id,articulo_codigo) values ('$a','$b','$c','$d','$e','$f')");
 
 
     $mensaje = "No pudo guardar.";
@@ -162,13 +164,18 @@ else
 
 $db = new MySQL();
 
-$consulta = $db->Consulta("select a.articulo_id, a.proveedor_id,a.marca_id, a.rubro_id, a.articulo_nombre, a.articulo_detalle from articulos a 
-                                  left join rubros r on r.rubro_id=a.rubro_id");
+$consulta = $db->Consulta("select a.articulo_id, a.proveedor_id,p.proveedor_nombre,a.marca_id,m.marca_nombre, a.rubro_id,r.rubro_nombre, a.articulo_nombre, a.articulo_detalle,a.articulo_codigo from articulos a 
+                                  left join rubros r on r.rubro_id=a.rubro_id 
+                                  left join marcas m on m.marca_id=a.marca_id
+                                  left join proveedores p on p.proveedor_id=a.proveedor_id");
 $num_total_registros = $db->num_rows($consulta);
 $total_paginas = ceil($num_total_registros / $TAMANO_PAGINA);
 
 
-$consulta = $db->Consulta("select articulo_id,proveedor_id,marca_id, rubro_id, articulo_nombre, articulo_detalle from articulos limit ". $inicio. ",". $TAMANO_PAGINA.";");
+$consulta = $db->Consulta("select a.articulo_id, a.proveedor_id,p.proveedor_nombre,a.marca_id,m.marca_nombre, a.rubro_id,r.rubro_nombre, a.articulo_nombre, a.articulo_detalle,a.articulo_codigo from articulos a 
+                                  left join rubros r on r.rubro_id=a.rubro_id 
+                                  left join marcas m on m.marca_id=a.marca_id
+                                  left join proveedores p on p.proveedor_id=a.proveedor_id limit ". $inicio. ",". $TAMANO_PAGINA.";");
 
 $x = array();
 

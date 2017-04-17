@@ -158,12 +158,14 @@ else
 
 $db = new MySQL();
 
-$consulta = $db->Consulta("select marca_id,rubro_id, marca_nombre, marca_detalle from marcas");
+$consulta = $db->Consulta("select m.marca_id,m.rubro_id, r.rubro_nombre, m.marca_nombre, m.marca_detalle from marcas m 
+                           left join rubros r on r.rubro_id = m.rubro_id");
 $num_total_registros = $db->num_rows($consulta);
 $total_paginas = ceil($num_total_registros / $TAMANO_PAGINA);
 
 
-$consulta = $db->Consulta("select marca_id,rubro_id, marca_nombre,marca_detalle from marcas limit ". $inicio. ",". $TAMANO_PAGINA.";");
+$consulta = $db->Consulta("select m.marca_id,m.rubro_id, r.rubro_nombre, m.marca_nombre, m.marca_detalle from marcas m 
+                           left join rubros r on r.rubro_id = m.rubro_id limit ". $inicio. ",". $TAMANO_PAGINA.";");
 
 $x = array();
 

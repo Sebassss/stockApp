@@ -546,7 +546,7 @@ function loadScript(url, callback)
 		                                            {
 		                                                case "text":
 		                                                {
-                                                            if(obj.Columnas[i].visible !="true")
+                                                            if(obj.Columnas[i].editable !="true")
                                                             {
                                                                 display = "display:none";
                                                             }
