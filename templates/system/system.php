@@ -3,7 +3,9 @@
 require_once "../app/data/class.conexion.php";
 require_once "../app/data/class.generamenu.php";
 
-$_SESSION['menu'] = '';
+if(!isset($_SESSION['menu'])) {
+    $_SESSION['menu'] = '';
+}
 
 /**
  * Created by PhpStorm.
@@ -24,7 +26,7 @@ $_SESSION['menu'] = '';
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="stylesheet" href="framework/css/bootstrap.min.css">
     <link rel="stylesheet" href="framework/css/ls.css">
-
+    <link rel="stylesheet" type="text/css" href="framework/plugins/scrolltotop/material-scrolltop.css">
     <style>
 
         @import "//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css";
@@ -44,6 +46,7 @@ $_SESSION['menu'] = '';
             margin: 0 auto;
             overflow-y: auto;
         }
+
 
 
 
@@ -214,14 +217,28 @@ $_SESSION['menu'] = '';
             </div>
         </div>
 </div>
+<button class="material-scrolltop" type="button"></button>
 
 
 
 
 <script src="framework/js/jquery-2.2.3.min.js"></script>
 <script src="framework/js/bootstrap.min.js"></script>
+<script src="framework/plugins/scrolltotop/material-scrolltop.js"></script>
 <script src="core/Grid/Grid.js"></script>
 <script src="core/js/functions.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('body').materialScrollTop({
+            revealElement: 'header',
+            revealPosition: 'bottom',
+            onScrollEnd: function() {
+                console.log('Scrolling End');
+            }
+        });
+    });
+</script>
 
 <script>
     $(document).ready(function() {
