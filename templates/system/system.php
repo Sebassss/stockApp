@@ -3,9 +3,7 @@
 require_once "../app/data/class.conexion.php";
 require_once "../app/data/class.generamenu.php";
 
-echo $_SESSION['userCredentials']['usuario_id'];
-//unset($_SESSION['userCredentials']);
-//session_destroy();
+$_SESSION['menu'] = '';
 
 /**
  * Created by PhpStorm.
@@ -82,7 +80,7 @@ echo $_SESSION['userCredentials']['usuario_id'];
         }
     </style>
 </head>
-<body class="body">
+<body class="body" onload="javascript:loadPage('<?php echo $_SESSION['menu']; ?>');">
 
 
 <div class="container">
@@ -201,7 +199,6 @@ echo $_SESSION['userCredentials']['usuario_id'];
 <div class="container">
     <div class="col-12 col-md-12" id="main">
         <div class="row">
-            <h1>Main</h1>
         </div>
     </div>
 </div>

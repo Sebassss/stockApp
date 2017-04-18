@@ -34,7 +34,7 @@ $app->any('/', function($req, $res, $args) use($app) {
 
 /*USUARIOS*/
     //OBTENGO DATOS DE USUARIOS
-    $app->post('/abm_getUsuarios', function($req, $res) use($app){
+    $app->get('/abm_getUsuarios', function($req, $res) use($app){
         require_once "../app/controllers/abm_getUsuariosController.php";
         return getDatos();
     });

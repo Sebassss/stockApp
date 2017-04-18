@@ -53,7 +53,7 @@ echo '<div class="row">
                         <div class="icon">
                             <div class="image"><i class="fa fa-thumbs-o-up"></i></div>
                             <div class="info">
-                                <h3 class="title">Ultiumos movimientos </h3>
+                                <h3 class="title">Últimos 5 movimientos </h3>
                                 <p>';
 
                                 $db = new MySQL();
@@ -72,7 +72,7 @@ echo '<div class="row">
 
                                 while($row = $db->fetch_array($result))
                                 {
-                                    echo '<li class="list-group-item list-group-item-danger">El dia <u>'.fecha_hora($row['fechahora']).'</u> se registra un <i>'.$row['operacion'].'</i> del Artículo <b>'.$row['articulo_nombre'].' - </b>  de <b>'.$row['cantidad'].'</b> Items</li>';
+                                    echo '<li class="list-group-item list-group-item-danger text-left">El dia <u>'.fecha_hora($row['fechahora']).'</u> se registra un <i>'.$row['operacion'].'</i> del Artículo <b>'.$row['articulo_nombre'].' - </b>  de <b><span class="badge">'.$row['cantidad'].'</span></b> Items</li>';
                                 }
                                 echo '</p>
                                 
@@ -87,15 +87,34 @@ echo '<div class="row">
                         <div class="icon">
                             <div class="image"><i class="fa fa-flag"></i></div>
                             <div class="info">
-                                <h3 class="title">Top 10 de Cantidades</h3>
-                                <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in lobortis nisl, vitae iaculis sapien. Phasellus ultrices gravida massa luctus ornare. Suspendisse blandit quam elit, eu imperdiet neque semper.
-                                </p>
-                                <div class="more">
-                                    <a href="#" title="Title Link">
-                                        Read More <i class="fa fa-angle-double-right"></i>
-                                    </a>
-                                </div>
+                                <h3 class="title">Top 5 de Cantidades</h3>
+                                <p>';
+                                    $db = new MySQL();
+                                    $mode = $db->Consulta("SET sql_mode = '';");
+                                    $result = $db->Consulta("select  sum(m.cantidad) as cantidad,
+                                                                    m.deposito_id,
+                                                                    d.deposito_nombre,
+                                                                    m.proveedor_id,
+                                                                    p.proveedor_nombre,
+                                                                    m.articulo_id,
+                                                                    a.articulo_nombre,
+                                                                    m.operacion,
+                                                                    ma.marca_nombre,
+                                                                    ru.rubro_nombre
+                                                                    from movimientos m
+                                                              left join depositos d on d.deposito_id = m.deposito_id
+                                                              left join proveedores p on p.proveedor_id = m.proveedor_id
+                                                              left join articulos a on a.articulo_id = m.articulo_id
+                                                              left join marcas ma on ma.marca_id=a.marca_id
+                                                              left join rubros ru on ru.rubro_id = a.rubro_id
+                                                              group by m.articulo_id limit 0, 5;");
+
+                                    while($row = $db->fetch_array($result))
+                                    {
+                                        echo '<li class="list-group-item list-group-item-success text-left"> Hay un total de <b><span class="badge">'.$row['cantidad'].'</span></b> <u>Rubro : '.$row['rubro_nombre'].' Marca : '.$row['marca_nombre'].' Artículo : '.$row['articulo_nombre'].'</u> </li>';
+                                    }
+                                echo '</p>
+
                             </div>
                         </div>
                         <div class="space"></div>
@@ -107,15 +126,12 @@ echo '<div class="row">
                         <div class="icon">
                             <div class="image"><i class="fa fa-desktop"></i></div>
                             <div class="info">
-                                <h3 class="title">Rubros</h3>
+                                <h3 class="title">Últimos 5 movimientos en artículos</h3>
                                 <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in lobortis nisl, vitae iaculis sapien. Phasellus ultrices gravida massa luctus ornare. Suspendisse blandit quam elit, eu imperdiet neque semper.
+                                    <li class="list-group-item list-group-item-success text-left"> Jhonatan Recio ha tomado <b><span class="badge">3</span></b> <u>Rubro : IMPRESORAS Marca : EPSON Artículo : epsons</u> </li>
+                                    <li class="list-group-item list-group-item-success text-left"> Dario Peña ha tomado <b><span class="badge">1</span></b> <u>Rubro : IMPRESORAS Marca : EPSON Artículo : Toner a35</u> </li>
+                                    <li class="list-group-item list-group-item-success text-left"> Sebastián Mendoza ha tomado <b><span class="badge">1</span></b> <u>Rubro : IMPRESORAS Marca : EPSON Artículo : Toner a35</u> </li>
                                 </p>
-                                <div class="more">
-                                    <a href="#" title="Title Link">
-                                        Read More <i class="fa fa-angle-double-right"></i>
-                                    </a>
-                                </div>
                             </div>
                         </div>
                         <div class="space"></div>

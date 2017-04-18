@@ -3,18 +3,20 @@
  */
 function loadPage(routes){
 
-    $.ajax({
-        url: routes,
-        type: "GET",
-        global: true,
-        cache:false
+    if(routes!="") {
+        $.ajax({
+            url: routes,
+            type: "GET",
+            global: true,
+            cache: false
 
-    }).done(function(data) {
+        }).done(function (data) {
 
-        $("#main").html(data);
-        $("html, body").delay(500).animate({scrollTop: $('#main').offset().top }, 1000);
+            $("#main").html(data);
+            $("html, body").delay(500).animate({scrollTop: $('#main').offset().top}, 1000);
 
-    });
+        });
+    }
 }
 
 function loadPage_reload(routes){

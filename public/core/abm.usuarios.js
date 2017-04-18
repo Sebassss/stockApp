@@ -20,7 +20,7 @@ jQuery(document).ready(function($)
 
     var datasource ={
         url: "abm_getUsuarios",
-        method : "POST",
+        method : "GET",
         datatype: "json",
         pagesize: 10,
         paginate: "false",
