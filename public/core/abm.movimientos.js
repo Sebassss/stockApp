@@ -14,7 +14,7 @@ jQuery(document).ready(function($)
         {index : "proveedor_id", name: "Proveedor",editable: "true", visible: "false", type: "dropdown", url: 'abm_getMovimientosProveedor', maxlength: "10", required: "true"},
         {index : "proveedor_nombre", name: "Proveedor",editable: "false", visible: "true", type: "text", maxlength: "10", required: "true"},
         {index : "articulo_id", name: "Artículo",editable: "true", visible: "false", type: "dropdown", url: 'abm_getMovimientosArticulos', maxlength: "10", required: "true"},
-        {index : "articulo_nombre", name: "Artículo",editable: "false", visible: "true", type: "text", maxlength: "10", required: "true"},
+        {index : "articulo_nombre", name: "Artículo",editable: "false", visible: "true", type: "text", maxlength: "50", required: "true"},
         {index : "operacion", name: "Operación",editable: "true", visible: "true", type: "dropdown", url: 'abm_getMovimientosOperacion', maxlength: "10", required: "true"},
         {index : "cantidad", name: "Cantidad",editable: "true", visible: "true", type: "text", maxlength: "10", required: "true"}];
 

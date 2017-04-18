@@ -10,8 +10,8 @@ jQuery(document).ready(function($)
     var colheaders = [
         {index : "marca_id", name: "id", editable: "false",  visible: "false", type: "text",placeholder:"", maxlength: "10", required: "true" },
         {index : "rubro_id", name: "Rubro",editable: "true", visible: "false", type: "dropdown", url: 'abm_getMarcasRubros', maxlength: "10", required: "true"},
-        {index : "rubro_nombre", name: "Rubro",editable: "false", visible: "true", type: "text", maxlength: "10",placeholder:"", required: "true" },
-        {index : "marca_nombre", name: "Nombre de la marca",editable: "true", visible: "true", type: "text", maxlength: "10",placeholder:"", required: "true" },
+        {index : "rubro_nombre", name: "Rubro",editable: "false", visible: "true", type: "text", maxlength: "30",placeholder:"", required: "true" },
+        {index : "marca_nombre", name: "Nombre de la marca",editable: "true", visible: "true", type: "text", maxlength: "30",placeholder:"", required: "true" },
         {index : "marca_detalle", name: "Detalles",editable: "true", visible: "true", type: "textarea", maxlength: "10", required: "true"}];
 
 

@@ -16,7 +16,7 @@ jQuery(document).ready(function($)
         {index : "rubro_id", name: "Rubro",editable: "true", visible: "false", type: "dropdown", url: 'abm_getArticulosRubros', maxlength: "10", required: "true"},
         {index : "rubro_nombre", name: "Rubro",editable: "false", visible: "true", type: "text",  maxlength: "10", required: "true"},
         {index : "articulo_codigo", name: "Código de barra",editable: "true", visible: "true", type: "text", maxlength: "50",placeholder:"", required: "true" },
-        {index : "articulo_nombre", name: "Nombre del artículo",editable: "true", visible: "true", type: "text", maxlength: "10",placeholder:"", required: "true" },
+        {index : "articulo_nombre", name: "Nombre del artículo",editable: "true", visible: "true", type: "text", maxlength: "50",placeholder:"", required: "true" },
         {index : "articulo_detalle", name: "Detalles",editable: "true", visible: "true", type: "textarea", maxlength: "100", required: "true"}];
 
 
