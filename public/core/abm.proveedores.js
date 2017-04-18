@@ -13,7 +13,7 @@ jQuery(document).ready(function($)
         {index : "proveedor_apellido", name: "Apellido",editable: "true", visible: "true", type: "text", maxlength: "10", required: "true"},
         {index : "proveedor_tel", name: "Teléfono",editable: "true", visible: "true", type: "text", maxlength: "10", required: "true"},
         {index : "proveedor_cel", name: "Celular",editable: "true", visible: "true", type: "text", maxlength: "10", required: "true"},
-        {index : "proveedor_empresa", name: "Empresa",editable: "true", visible: "true", type: "text", maxlength: "10", required: "true"},
+        {index : "proveedor_empresa", name: "Empresa",editable: "true", visible: "true", type: "text", maxlength: "50", required: "true"},
         {index : "proveedor_domicilio", name: "Domicilio",editable: "true", visible: "true", type: "textarea",  required: "true"},
         {index : "proveedor_cuit", name: "CUIT",editable: "true", visible: "true", type: "text", maxlength: "10", required: "true"},
         {index : "proveedor_cuil", name: "CUIL",editable: "true", visible: "true", type: "text", maxlength: "10", required: "true"}];

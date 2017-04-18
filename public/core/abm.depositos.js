@@ -10,7 +10,7 @@ jQuery(document).ready(function($)
     var colheaders = [
         {index : "deposito_id", name: "id", editable: "false",  visible: "false", type: "text",placeholder:"", maxlength: "10", required: "true" },
         {index : "deposito_nombre", name: "Nombre del depósito",editable: "true", visible: "true", type: "text", maxlength: "50",placeholder:"", required: "true" },
-        {index : "deposito_detalle", name: "Detalles",editable: "true", visible: "true", type: "textarea", maxlength: "10", required: "true"}];
+        {index : "deposito_detalle", name: "Detalles",editable: "true", visible: "true", type: "textarea",  required: "true"}];
 
 
     var edit_options ={	url: "abm_getDepositos",titulo: "Editar",method : "PUT" };

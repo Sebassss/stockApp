@@ -9,7 +9,7 @@ jQuery(document).ready(function($)
 
     var colheaders = [
         {index : "rubro_id", name: "id", editable: "false",  visible: "false", type: "text",placeholder:"", maxlength: "10", required: "true" },
-        {index : "rubro_nombre", name: "Nombre del rubro",editable: "true", visible: "true", type: "text", maxlength: "10",placeholder:"", required: "true" }];
+        {index : "rubro_nombre", name: "Nombre del rubro",editable: "true", visible: "true", type: "text", maxlength: "50",placeholder:"", required: "true" }];
 
 
     var edit_options ={	url: "abm_getRubros",titulo: "Editar",method : "PUT" };
