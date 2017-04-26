@@ -326,3 +326,32 @@ $app->get('/cerrar_sesion', function($req, $res) use($app){
     });
 
 /*FIN MOVIMIENTOS*/
+
+
+/*GENERADOR DE CODIGO DE BARRAS*/
+
+    //GENERACION DE CODIGO DE BARRAS
+    $app->get('/cod_generacion/[{codigo}]', function($req, $res) use($app){
+        require_once "../app/controllers/cod_generacion.php";
+        $codigo = $req->getAttribute('codigo');
+
+        return $this->renderer->render($res, 'barcode\make.barcode.php', array(
+            'code'=>$codigo
+        ));
+
+    });
+
+
+    //PRUEBA DE GENERACION DE CODIGO DE BARRAS
+    $app->get('/testcode', function($req, $res) use($app){
+
+        return $this->renderer->render($res, 'barcodetest\barcodehtml.php');
+    });
+
+    //BUSQUEDA DE CODIGO DE BARRAS
+    $app->get('/cod_busqueda', function($req, $res) use($app){
+        //require_once "../app/controllers/abm_getMovimientosController.php";
+        //return getBarcode();
+    });
+
+/*FIN GENERADOR DE CODIGO DE BARRAS*/
