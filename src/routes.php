@@ -355,3 +355,59 @@ $app->get('/cerrar_sesion', function($req, $res) use($app){
     });
 
 /*FIN GENERADOR DE CODIGO DE BARRAS*/
+
+/*STOCK*/
+//OBTENGO ARTICULO POR CODIGO
+$app->get('/getArticuloCodigo', function($req, $res) use($app){
+    require_once "../app/controllers/abm_getStockController.php";
+    return getDatos();
+});
+
+////GUARDA MOVIMIENTOS
+//$app->post('/abm_getMovimientos', function($req, $res) use($app){
+//    require_once "../app/controllers/abm_getMovimientosController.php";
+//    return saveDatos();
+//});
+//
+////BORRA MOVIMIENTOS
+//$app->delete('/abm_getMovimientos', function($req, $res) use($app){
+//    require_once "../app/controllers/abm_getMovimientosController.php";
+//    return deleteDatos();
+//});
+//
+////BORRA MOVIMIENTOS
+//$app->put('/abm_getMovimientos', function($req, $res) use($app){
+//    require_once "../app/controllers/abm_getMovimientosController.php";
+//    return editDatos();
+//});
+//
+////OBTIENE PROVEEDORES
+//$app->get('/abm_getMovimientosProveedor', function($req, $res) use($app){
+//    require_once "../app/controllers/abm_getMovimientosController.php";
+//    return getProveedor();
+//});
+//
+////OBTIENE ARTICULOS
+//$app->get('/abm_getMovimientosArticulos', function($req, $res) use($app){
+//    require_once "../app/controllers/abm_getMovimientosController.php";
+//    return getArticulos();
+//});
+//
+////OBTIENE OPERACION
+//$app->get('/abm_getMovimientosOperacion', function($req, $res) use($app){
+//    require_once "../app/controllers/abm_getMovimientosController.php";
+//    return getOperacion();
+//});
+//
+////OBTIENE OPERACION
+//$app->get('/abm_getMovimientosDeposito', function($req, $res) use($app){
+//    require_once "../app/controllers/abm_getMovimientosController.php";
+//    return getDeposito();
+//});
+//
+//VISTA STOCK
+$app->get('/abm_stock', function($req, $res) use($app){
+    return $this->renderer->render($res, 'stock/abm.stock.php');
+});
+//
+///*FIN STOCK*/
