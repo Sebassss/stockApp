@@ -127,22 +127,53 @@ $articulo = $_GET['txt_articulo'];
 $cant = $_GET['txt_cant'];
 $db = new MySQL();
 
-$consulta = $db->Consulta("select a.articulo_id, m.marca_nombre, r.rubro_nombre, a.articulo_nombre  from articulos a 
-                                                 left join marcas m on a.marca_id = m.marca_id 
-                                                 left join rubros r on r.rubro_id = a.rubro_id
-                                where a.articulo_codigo =".$articulo);
+$consulta = $db->Consulta("select  a.articulo_id, a.articulo_nombre, ma.marca_nombre, r.rubro_nombre,(select  sum(mo.cantidad)  from movimientos mo 
+				 left join articulos a on a.articulo_id = mo.articulo_id
+				 left join rubros r on r.rubro_id = a.rubro_id
+				 left join marcas ma on ma.marca_id = a.marca_id where mo.operacion = 0 and  a.articulo_codigo = ".$articulo.") as cantidad   from movimientos mo 
+				 left join articulos a on a.articulo_id = mo.articulo_id
+				 left join rubros r on r.rubro_id = a.rubro_id
+				 left join marcas ma on ma.marca_id = a.marca_id where mo.operacion = 0 and a.articulo_codigo = ".$articulo."  GROUP BY a.articulo_id");
 
 
 $x = array();
 
 $i=0;
-while($row = $db->fetch_array($consulta))
-{
-    $x[$i] = $row;
-    $i++;
-}
 
-echo json_encode($x);
+$mensaje = "No hay artículos disponibles";
+$estado = "false";
+$datos = array();
+
+
+
+    if($db->num_rows($consulta) > 0)
+    {
+        $mensaje = "Hay artículos disponibles.";
+        $estado = "true";
+
+        while($row = $db->fetch_array($consulta))
+        {
+            $x[$i] = $row;
+            $i++;
+        }
+        $datos = $x;
+    }
+
+    $response = array(
+        'mensaje' => $mensaje,
+        'estado' => $estado,
+        'datos' => $datos,
+    );
+
+    echo json_encode($response);
+
+
+
+
+
+
+
+
 
 }
 

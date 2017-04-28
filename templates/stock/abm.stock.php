@@ -44,6 +44,7 @@
                     <th>Artículo</th>
                     <th>Marca</th>
                     <th>Rubro</th>
+                    <th>Cantidad</th>
                     <th>Acción</th>
                 </tr>
                 </thead>
@@ -57,6 +58,9 @@
 </html>
 
 <script>
+
+    var global_cant = [];
+
 
     $(document).ready(function(){
 
@@ -80,13 +84,19 @@
             //async:false,
             success: function(response)
             {
-                //$("<p>"+response[0].articulo_nombre+"</p>").insertAfter("#table");
-                $("#tbody").append("<tr>"+
-                                    "<td>"+response[0].articulo_nombre+"</td>"+
-                                    "<td>"+response[0].marca_nombre+"</td>"+
-                                    "<td>"+response[0].rubro_nombre+"</td>"+
-                                    "<td><span id='btn_add_articulo' class='input-group-addon btn-danger'>Quitar</span></td>"+
-                                    "</tr>")
+                if(response.datos[0][4] < $("#txt_cant").val())
+                {
+                    alert("La cantidad ingresada supera el stock declarado. Stock Actual: " + response.datos[0][4]);
+                }
+                else {
+                    $("#tbody").append("<tr>" +
+                        "<td>" + response.datos[0][1] + "</td>" +
+                        "<td>" + response.datos[0][2] + "</td>" +
+                        "<td>" + response.datos[0][3] + "</td>" +
+                        "<td>" + $("#txt_cant").val() + "</td>" +
+                        "<td><span id='btn_add_articulo' class='input-group-addon btn-danger'>Quitar</span></td>" +
+                        "</tr>")
+                }
             },
             error: function(error)
             {
