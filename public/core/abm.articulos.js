@@ -11,14 +11,16 @@ jQuery(document).ready(function($)
         {index : "articulo_id", name: "id", editable: "false",  visible: "false", type: "text",placeholder:"", maxlength: "10", required: "true" },
         {index : "proveedor_id", name: "Proveedor",editable: "true", visible: "false", type: "dropdown", url: 'abm_getArticulosProveedor', maxlength: "10", required: "true"},
         {index : "proveedor_nombre", name: "Proveedor",editable: "false", visible: "true", type: "text",  maxlength: "10", required: "true"},
-        {index : "marca_id", name: "Marca",editable: "true", visible: "false", type: "dropdown", url: 'abm_getArticulosMarcas', maxlength: "10", required: "true"},
-        {index : "marca_nombre", name: "Marca",editable: "false", visible: "true", type: "text",  maxlength: "20", required: "true"},
         {index : "rubro_id", name: "Rubro",editable: "true", visible: "false", type: "dropdown", url: 'abm_getArticulosRubros', maxlength: "10", required: "true"},
         {index : "rubro_nombre", name: "Rubro",editable: "false", visible: "true", type: "text",  maxlength: "10", required: "true"},
+        {index : "marca_id", name: "Marca",editable: "true", visible: "false", type: "dropdown", url: 'abm_getArticulosMarcas', maxlength: "10", required: "true", trigger:"rubro_id"},
+        {index : "marca_nombre", name: "Marca",editable: "false", visible: "true", type: "text",  maxlength: "20", required: "true"},
         {index : "articulo_codigo", name: "Código de barra",editable: "true", visible: "true", type: "text", maxlength: "50",placeholder:"", required: "true" },
         {index : "articulo_nombre", name: "Nombre del artículo",editable: "true", visible: "true", type: "text", maxlength: "50",placeholder:"", required: "true" },
         {index : "articulo_cantidad", name: "Cantidad",editable: "true", visible: "true", type: "text", maxlength: "20",placeholder:"Cantidad de artículos", required: "true" },
-        {index : "articulo_detalle", name: "Detalles",editable: "true", visible: "true", type: "textarea", maxlength: "100", required: "true"}];
+        {index : "articulo_detalle", name: "Detalles",editable: "true", visible: "true", type: "textarea", maxlength: "100", required: "true"},
+        {index : "deposito_id", name: "Depósito",editable: "true", visible: "false", type: "dropdown", url: 'abm_getMovimientosDeposito', maxlength: "10", required: "true"},
+        {index : "deposito_nombre", name: "Depósito",editable: "false", visible: "true", type: "text", maxlength: "10", required: "true"},];
 
 
     var edit_options ={	url: "abm_getArticulos",titulo: "Editar",method : "PUT" };

@@ -584,7 +584,7 @@ function loadScript(url, callback)
                                                             var required =  (obj.Columnas[i].required == "true") ? 'required' : '';
                                                             html += "<div class='form-group' style='"+display+"'>"
                                                             html += "  <label for='"+id+"_field_"+obj.Columnas[i].index+"'>"+obj.Columnas[i].name+":</label>"
-                                                            html += "  <select  class='form-control' name='" + id + "_field_" + obj.Columnas[i].index + "'  id='"+id+"_field_"+obj.Columnas[i].index+"' style='"+obj.Columnas[i].style+"' maxlength='"+obj.Columnas[i].maxlength+"' " + required +" />"
+                                                            html += "  <select onchange=''  class='form-control' name='" + id + "_field_" + obj.Columnas[i].index + "'  id='"+id+"_field_"+obj.Columnas[i].index+"' style='"+obj.Columnas[i].style+"' maxlength='"+obj.Columnas[i].maxlength+"' " + required +" />"
                                                             html += "</div>"
 
 

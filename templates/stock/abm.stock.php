@@ -45,6 +45,7 @@
                     <th>Marca</th>
                     <th>Rubro</th>
                     <th>Cantidad</th>
+                    <th>Depósito</th>
                     <th>Acción</th>
                 </tr>
                 </thead>
