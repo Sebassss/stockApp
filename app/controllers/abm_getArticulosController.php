@@ -97,7 +97,7 @@ function saveDatos()
     $a = $_POST['table_field_articulo_nombre'];
     $b = $_POST['table_field_marca_id'];
     $c = $_POST['table_field_rubro_id'];
-    $d = $_POST['table_field_articulo_detalle'];
+    $d = addslashes($_POST['table_field_articulo_detalle']);
     $e = $_POST['table_field_proveedor_id'];
     $f = $_POST['table_field_articulo_codigo'];
     $g = $_POST['table_field_articulo_cantidad'];
@@ -187,7 +187,21 @@ $x = array();
 $i=0;
 while($row = $db->fetch_array($consulta))
 {
-    $x[$i] = $row;
+     //$x[$i] = $row;
+
+    $x[$i] = array('articulo_id' => $row['articulo_id'],
+                   'proveedor_nombre' => $row['proveedor_nombre'],
+        'marca_id' => $row['marca_id'],
+        'marca_nombre' => $row['marca_nombre'],
+        'rubro_id' => $row['rubro_id'],
+        'rubro_nombre' => $row['rubro_nombre'],
+        'articulo_nombre' => $row['articulo_nombre'],
+        'articulo_codigo' => $row['articulo_codigo'],
+        'articulo_cantidad' => $row['articulo_cantidad'],
+        'deposito_id' => $row['deposito_id'],
+        'deposito_nombre' => $row['deposito_nombre'],
+        'articulo_detalle' => htmlentities(stripslashes(utf8_encode($row['articulo_detalle'])), ENT_QUOTES),
+        'proveedor_id' => $row['proveedor_id']);
     $i++;
 }
 
@@ -202,7 +216,6 @@ $t = array(array(
 
 //array_push($x, $t);
 //echo json_encode($x);
-
 
 
 class resultado {

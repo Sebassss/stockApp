@@ -277,6 +277,7 @@ function loadScript(url, callback)
 			                        dataType: "json",
 			                        success: function(data)
 			                        {
+
 			                        	$("#"+id).empty();
 			                        	var params = $.extend ($(this),obj);
 			                        	//$body.removeClass("loading");
@@ -290,7 +291,7 @@ function loadScript(url, callback)
 						              }
 						              else
 						              {
-						              	alert("Error");
+						              	alert("Errorrrr");
 						              }
 						              //console.log(xhr, resp, text);
 						          }
@@ -391,7 +392,9 @@ function loadScript(url, callback)
                                                         {
                                                             display = "";
                                                         }
-					                                    	html+="<td style='"+display+"'>"+dataset.values[k][t]+"</td>"
+
+					                                    	html+="<td id="+t+"_"+k+" style='"+display+"'></td>"
+																//$("#"+t+"_"+k).html(dataset.values[k][t]);
 				                                    }
 											}
 											html+="</tr>"
@@ -440,7 +443,26 @@ function loadScript(url, callback)
 
 
 	                                        $("#"+id).append(html);
-	                                        
+
+
+                                            for(var k in dataset.values  )
+                                            {
+                                                var cant_columns=0, cant_columns_query=0
+
+                                                for(i=0;i<obj.Columnas.length;i++)
+                                                {
+                                                    cant_columns=i+1
+                                                    var t = obj.Columnas[i].index
+
+
+
+
+                                                        $("#"+t+"_"+k).append(dataset.values[k][t]);
+
+                                                }
+
+                                            }
+
 											for(t=0; t<dataset.info[0].page_count;t++)
 	                                        {
 	                                        	
@@ -661,6 +683,10 @@ function loadScript(url, callback)
                                                                     selector: "textarea#"+ id + "_field_" + obj.Columnas[i].index,
                                                                     height: obj.Columnas[i].type[1],
                                                                     language: 'es',
+                                                                    entity_encoding: "raw",
+                                                                    relative_urls : false,
+                                                                    convert_urls : false,
+
                                                                     menubar: false,
                                                                     plugins: [
                                                                         'advlist autolink lists link image charmap print preview anchor',
@@ -692,7 +718,7 @@ function loadScript(url, callback)
 
 											case 1: /*Editar*/
 											{
-
+                                                console.dir(obj);
 												var data = methods.rowClick(id);
 												if(data.length > 0 )
 												{
@@ -820,6 +846,8 @@ function loadScript(url, callback)
 
                                                             case "TEXTAREA":
                                                             {
+                                                            	console.dir(data[i]);
+
                                                                 $("#" + id + "_field_" + obj.Columnas[i].index).val(data[i]);
                                                                 var oldEditor = tinyMCE.get(id + "_field_" + obj.Columnas[i].index);
                                                                 if (oldEditor != undefined) {
@@ -830,6 +858,10 @@ function loadScript(url, callback)
                                                                     selector: "textarea#"+ id + "_field_" + obj.Columnas[i].index,
                                                                     height: obj.Columnas[i].type[1],
                                                                     language: 'es',
+                                                                    entity_encoding: "raw",
+                                                                    relative_urls : false,
+                                                                    convert_urls : false,
+
                                                                     menubar: false,
                                                                     plugins: [
                                                                         'advlist autolink lists link image charmap print preview anchor',
@@ -996,6 +1028,10 @@ function loadScript(url, callback)
                                                                     selector: "textarea#"+ id + "_field_" + obj.Columnas[i].index,
                                                                     height: obj.Columnas[i].type[1],
                                                                     language: 'es',
+                                                                    entity_encoding: "raw",
+                                                                    relative_urls : false,
+                                                                    convert_urls : false,
+
                                                                     menubar: false,
                                                                     readonly:1,
                                                                     plugins: [
