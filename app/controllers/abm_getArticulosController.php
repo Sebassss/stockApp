@@ -54,8 +54,6 @@ function editDatos()
     parse_str(file_get_contents("php://input"),$post_vars);
     //print_r($post_vars);
 
-
-
     $db = new MySQL();
     $a = $post_vars['table_field_articulo_id'];
     $b = $post_vars['table_field_marca_id'];
@@ -65,8 +63,9 @@ function editDatos()
     $f = $post_vars['table_field_proveedor_id'];
     $g = $post_vars['table_field_articulo_codigo'];
     $h = $post_vars['table_field_articulo_cantidad'];
+    $i = $post_vars['table_field_deposito_id'];
 
-    $result = $db->consulta("update articulos set articulo_nombre= '$d', articulo_cantidad='$h', articulo_detalle='$e', rubro_id='$c', marca_id='$b',proveedor_id='$f', articulo_codigo='$g'  where articulo_id = '$a'");
+    $result = $db->consulta("update articulos set deposito_id='$i', articulo_nombre= '$d', articulo_cantidad='$h', articulo_detalle='$e', rubro_id='$c', marca_id='$b',proveedor_id='$f', articulo_codigo='$g'  where articulo_id = '$a'");
     $mensaje = "No pudo editar.";
     $estado = "false";
 
@@ -98,13 +97,14 @@ function saveDatos()
     $a = $_POST['table_field_articulo_nombre'];
     $b = $_POST['table_field_marca_id'];
     $c = $_POST['table_field_rubro_id'];
-    $d = $_POST['table_field_articulo_detalle'];
+    $d = addslashes($_POST['table_field_articulo_detalle']);
     $e = $_POST['table_field_proveedor_id'];
     $f = $_POST['table_field_articulo_codigo'];
     $g = $_POST['table_field_articulo_cantidad'];
+    $h = $_POST['table_field_deposito_id'];
 
 
-    $result = $db->consulta("insert into articulos (articulo_nombre, marca_id,rubro_id, articulo_detalle,proveedor_id,articulo_codigo,articulo_cantidad) values ('$a','$b','$c','$d','$e','$f','$g')");
+    $result = $db->consulta("insert into articulos (articulo_nombre, marca_id,rubro_id, articulo_detalle,proveedor_id,articulo_codigo,articulo_cantidad,deposito_id) values ('$a','$b','$c','$d','$e','$f','$g','$h')");
 
 
     $mensaje = "No pudo guardar.";
@@ -167,25 +167,41 @@ else
 
 $db = new MySQL();
 
-$consulta = $db->Consulta("select a.articulo_id, a.proveedor_id,p.proveedor_nombre,a.marca_id,m.marca_nombre, a.rubro_id,r.rubro_nombre, a.articulo_nombre, a.articulo_detalle,a.articulo_codigo,a.articulo_cantidad from articulos a 
+$consulta = $db->Consulta("select a.articulo_id, a.proveedor_id,p.proveedor_nombre,a.marca_id,m.marca_nombre, a.rubro_id,r.rubro_nombre, a.articulo_nombre, a.articulo_detalle,a.articulo_codigo,a.articulo_cantidad,a.deposito_id, d.deposito_nombre from articulos a 
                                   left join rubros r on r.rubro_id=a.rubro_id 
                                   left join marcas m on m.marca_id=a.marca_id
-                                  left join proveedores p on p.proveedor_id=a.proveedor_id");
+                                  left join proveedores p on p.proveedor_id=a.proveedor_id
+                                  left join depositos d on d.deposito_id = a.deposito_id");
 $num_total_registros = $db->num_rows($consulta);
 $total_paginas = ceil($num_total_registros / $TAMANO_PAGINA);
 
 
-$consulta = $db->Consulta("select a.articulo_id, a.proveedor_id,p.proveedor_nombre,a.marca_id,m.marca_nombre, a.rubro_id,r.rubro_nombre, a.articulo_nombre, a.articulo_detalle,a.articulo_codigo,a.articulo_cantidad from articulos a 
+$consulta = $db->Consulta("select a.articulo_id, a.proveedor_id,p.proveedor_nombre,a.marca_id,m.marca_nombre, a.rubro_id,r.rubro_nombre, a.articulo_nombre, a.articulo_detalle,a.articulo_codigo,a.articulo_cantidad,a.deposito_id, d.deposito_nombre from articulos a 
                                   left join rubros r on r.rubro_id=a.rubro_id 
                                   left join marcas m on m.marca_id=a.marca_id
-                                  left join proveedores p on p.proveedor_id=a.proveedor_id limit ". $inicio. ",". $TAMANO_PAGINA.";");
+                                  left join proveedores p on p.proveedor_id=a.proveedor_id 
+                                  left join depositos d on d.deposito_id = a.deposito_id limit ". $inicio. ",". $TAMANO_PAGINA.";");
 
 $x = array();
 
 $i=0;
 while($row = $db->fetch_array($consulta))
 {
-    $x[$i] = $row;
+     //$x[$i] = $row;
+
+    $x[$i] = array('articulo_id' => $row['articulo_id'],
+                   'proveedor_nombre' => $row['proveedor_nombre'],
+        'marca_id' => $row['marca_id'],
+        'marca_nombre' => $row['marca_nombre'],
+        'rubro_id' => $row['rubro_id'],
+        'rubro_nombre' => $row['rubro_nombre'],
+        'articulo_nombre' => $row['articulo_nombre'],
+        'articulo_codigo' => $row['articulo_codigo'],
+        'articulo_cantidad' => $row['articulo_cantidad'],
+        'deposito_id' => $row['deposito_id'],
+        'deposito_nombre' => $row['deposito_nombre'],
+        'articulo_detalle' => htmlentities(stripslashes(utf8_encode($row['articulo_detalle'])), ENT_QUOTES),
+        'proveedor_id' => $row['proveedor_id']);
     $i++;
 }
 
@@ -200,7 +216,6 @@ $t = array(array(
 
 //array_push($x, $t);
 //echo json_encode($x);
-
 
 
 class resultado {
@@ -244,7 +259,7 @@ function getMarcas()
 {
     $db = new MySQL();
 
-    $consulta = $db->Consulta("SELECT  a.marca_nombre, a.marca_id  FROM marcas a");
+    $consulta = $db->Consulta("SELECT  concat(a.marca_nombre,' - ', a.marca_detalle) as marca_nombre, a.marca_id  FROM marcas a  ");
 
     $i = 0;
     $x = array();
