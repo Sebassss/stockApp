@@ -321,7 +321,7 @@ function loadScript(url, callback)
     						var tmp = [];
     						for (i=0; i<$("#"+id).find('.highlight td').length; i++)
     						{
-    							tmp[i] = $("#"+id).find( ".highlight").find('td').eq(i).text();
+    							tmp[i] = $("#"+id).find( ".highlight").find('td').eq(i).html();
     						}
     						return tmp;
     				},
@@ -393,8 +393,24 @@ function loadScript(url, callback)
                                                             display = "";
                                                         }
 
-					                                    	html+="<td id="+t+"_"+k+" style='"+display+"'></td>"
+                                                        var data = dataset.values[k][t].replace("&lt;","")
+
+														data = data.replace("p&gt;","");
+                                                        data = data.replace("&lt;","<");
+                                                        data = data.replace("p&gt;",">");
+                                                        data = data.replace("&quot;","'");
+
+                                                        data = data.replace("p&gt;","");
+                                                        data = data.replace("&lt;","<");
+                                                        data = data.replace("p&gt;",">");
+                                                        data = data.replace("&quot;","'");
+
+
+
+
+					                                    	html+="<td id="+t+"_"+k+" style='"+display+"'>"+data+"</td>"
 																//$("#"+t+"_"+k).html(dataset.values[k][t]);
+
 				                                    }
 											}
 											html+="</tr>"
@@ -457,7 +473,7 @@ function loadScript(url, callback)
 
 
 
-                                                        $("#"+t+"_"+k).append(dataset.values[k][t]);
+                                                        //$("#"+t+"_"+k).append(dataset.values[k][t]);
 
                                                 }
 
@@ -834,6 +850,7 @@ function loadScript(url, callback)
                                                             case "INPUT":
                                                             {
                                                                 $("#" + id + "_field_" + obj.Columnas[i].index).val(data[i]);
+                                                                console.log(data[i]);
                                                             }break;
 
                                                             case "SELECT":
@@ -846,9 +863,8 @@ function loadScript(url, callback)
 
                                                             case "TEXTAREA":
                                                             {
-                                                            	console.dir(data[i]);
 
-                                                                $("#" + id + "_field_" + obj.Columnas[i].index).val(data[i]);
+                                                                $("#" + id + "_field_" + obj.Columnas[i].index).html(data[i]);
                                                                 var oldEditor = tinyMCE.get(id + "_field_" + obj.Columnas[i].index);
                                                                 if (oldEditor != undefined) {
                                                                     tinymce.remove(oldEditor);

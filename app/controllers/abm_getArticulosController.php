@@ -97,7 +97,7 @@ function saveDatos()
     $a = $_POST['table_field_articulo_nombre'];
     $b = $_POST['table_field_marca_id'];
     $c = $_POST['table_field_rubro_id'];
-    $d = addslashes($_POST['table_field_articulo_detalle']);
+    $d = html_entity_decode($_POST['table_field_articulo_detalle']);
     $e = $_POST['table_field_proveedor_id'];
     $f = $_POST['table_field_articulo_codigo'];
     $g = $_POST['table_field_articulo_cantidad'];
@@ -200,7 +200,7 @@ while($row = $db->fetch_array($consulta))
         'articulo_cantidad' => $row['articulo_cantidad'],
         'deposito_id' => $row['deposito_id'],
         'deposito_nombre' => $row['deposito_nombre'],
-        'articulo_detalle' => htmlentities(stripslashes(utf8_encode($row['articulo_detalle'])), ENT_QUOTES),
+        'articulo_detalle' => htmlentities(utf8_encode(stripslashes($row['articulo_detalle']))),
         'proveedor_id' => $row['proveedor_id']);
     $i++;
 }
