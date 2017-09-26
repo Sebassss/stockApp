@@ -239,6 +239,56 @@ echo json_encode($elresultado);
 }
 
 
+
+function getDatos2()
+{
+
+
+
+
+    $db = new MySQL();
+
+    $consulta = $db->Consulta("select a.articulo_id, a.proveedor_id,p.proveedor_nombre,a.marca_id,m.marca_nombre, a.rubro_id,r.rubro_nombre, a.articulo_nombre, a.articulo_detalle,a.articulo_codigo,a.articulo_cantidad,a.deposito_id, d.deposito_nombre from articulos a 
+                                  left join rubros r on r.rubro_id=a.rubro_id 
+                                  left join marcas m on m.marca_id=a.marca_id
+                                  left join proveedores p on p.proveedor_id=a.proveedor_id
+                                  left join depositos d on d.deposito_id = a.deposito_id");
+
+
+    $x = array();
+
+    $i=0;
+    while($row = $db->fetch_array($consulta))
+    {
+        //$x[$i] = $row;
+
+        $x[$i] = array('articulo_id' => $row['articulo_id'],
+            'proveedor_nombre' => $row['proveedor_nombre'],
+            'marca_id' => $row['marca_id'],
+            'marca_nombre' => $row['marca_nombre'],
+            'rubro_id' => $row['rubro_id'],
+            'rubro_nombre' => $row['rubro_nombre'],
+            'articulo_nombre' => $row['articulo_nombre'],
+            'articulo_codigo' => $row['articulo_codigo'],
+            'articulo_cantidad' => $row['articulo_cantidad'],
+            'deposito_id' => $row['deposito_id'],
+            'deposito_nombre' => $row['deposito_nombre'],
+            'articulo_detalle' => htmlentities(utf8_encode(stripslashes($row['articulo_detalle']))),
+            'proveedor_id' => $row['proveedor_id']);
+        $i++;
+    }
+
+
+
+
+
+    echo json_encode($x);
+
+
+
+}
+
+
 function getRubros()
 {
     $db = new MySQL();

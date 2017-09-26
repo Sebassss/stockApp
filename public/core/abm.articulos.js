@@ -28,7 +28,7 @@ jQuery(document).ready(function($)
     var del_options ={ url: "abm_getArticulos",titulo: "Eliminar",method : "DELETE"};
 
     var datasource ={
-        url: "abm_getArticulos",
+        url: "abm_getArticulos2",
         method : "GET",
         datatype: "json",
         pagesize: 10,

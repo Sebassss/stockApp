@@ -222,10 +222,15 @@ $app->get('/cerrar_sesion', function($req, $res) use($app){
 
 /*ARTICULOS*/
 //OBTENGO ARTICULOS
-    $app->get('/abm_getArticulos', function($req, $res) use($app){
+    $app->get('/abm_getArticulos2', function($req, $res) use($app){
         require_once "../app/controllers/abm_getArticulosController.php";
         return getDatos();
     });
+
+$app->get('/abm_getArticulos', function($req, $res) use($app){
+    require_once "../app/controllers/abm_getArticulosController.php";
+    return getDatos2();
+});
 
     //GUARDA ARTICULOS
     $app->post('/abm_getArticulos', function($req, $res) use($app){
