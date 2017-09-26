@@ -20,72 +20,39 @@
     <!--jquery-->
     <script src="js/jquery.js"></script>
 
-    <title>Inicio</title>
+    <title>Stock</title>
 </head>
 
-<body>
+<body class="layout-dark theme-blue">
 
     <div class="views">
         <div class="view view-main">
             <div class="pages">
-                <div class="page class="theme-blue"">
+                <div class="page">
+
+                    <!-- Search Bar with "searchbar-init" class for auto initialization -->
+                    <form class="searchbar searchbar-init" data-search-list=".list-block-search" data-search-in=".item-title" data-found=".searchbar-found" data-not-found=".searchbar-not-found">
+                        <div class="searchbar-input">
+                            <input type="search" placeholder="Buscar">
+                            <a href="#" class="searchbar-clear"></a>
+                        </div>
+                        <a href="#" class="searchbar-cancel">Cancel</a>
+                    </form>
+
+                    <div class="searchbar-overlay"></div>
+
                     <div class="page-content">
-
-                        <div class="content-block">
-
-                            <div class="data-table data-table-init card">
-                                <div class="card-header">
-                                    <!-- Table links/actions -->
-                                    <div class="data-table-links">
-                                        <a class="link">Add</a>
-                                        <a class="link">Remove</a>
-                                    </div>
-                                    <!-- Table actions -->
-                                    <div class="data-table-actions">
-                                        <a class="link icon-only"><i class="icon f7-icons">sort</i></a>
-                                        <a class="link icon-only"><i class="icon f7-icons">more_vertical_round</i></a>
-                                    </div>
-                                </div>
-                                <div class="card-content">
-                                    <table>
-                                        <thead>
-                                        <tr>
-                                            <th class="checkbox-cell">
-                                                <label class="form-checkbox">
-                                                    <input type="checkbox"><i></i>
-                                                </label>
-                                            </th>
-                                            <th class="label-cell">Desert (100g serving)</th>
-                                            <th class="numeric-cell">Calories</th>
-
-                                            <th></th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td class="checkbox-cell">
-                                                <label class="form-checkbox">
-                                                    <input type="checkbox"><i></i>
-                                                </label>
-                                            </td>
-                                            <td class="label-cell">Frozen yogurt</td>
-                                            <td class="numeric-cell">159</td>
-
-                                            <td class="actions-cell">
-                                                <a class="link icon-only"><i class="icon f7-icons">compose</i></a>
-                                                <a class="link icon-only"><i class="icon f7-icons">trash</i></a>
-                                            </td>
-                                        </tr>
-
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-
-
+                        <div class="content-block searchbar-not-found">
+                            Nothing found
                         </div>
 
+                        <div class="list-block list-block-search searchbar-found">
+                            <ul id="listContent">
+
+                            </ul>
+                        </div>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -96,6 +63,9 @@
 
 <!--framework7-->
 <script src="js/framework7.js"></script>
+
+<!--user script-->
+<script src="js/user.js"></script>
 
 
 </html>
