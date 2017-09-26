@@ -38,6 +38,9 @@ $(function(){
 
     });
 
+
+
+
 });
 
 function fillTable(data){
@@ -56,15 +59,19 @@ function fillTable(data){
         }
 
         var html =
-            '<li class="item-content">'+
-            '<div class="item-inner">'+
-            htmlBadge +
-            '<div class="item-title">'+ data[index].articulo_nombre + '<br>'+
-
-            '<div class="chip  bg-lightgreen"><div class="chip-label ">'+ data[index].deposito_nombre+ '</div></div>' +
-
-            '</div>'+
-            '</div>'+
+            '<li class="item-content"  data-id="'+ data[index].articulo_id +'">'+
+                '<div class="item-inner">'+
+                    htmlBadge +
+                    '<div class="item-title">'+ data[index].articulo_nombre +
+                        '<br>'+
+                        '<div class="chip">' +
+                            '<div class="chip-label">'+
+                        data[index].deposito_nombre + '</div></div>' +
+                        '<div class="rubro" >'+ data[index].rubro_nombre+'</div>'+
+                        '<div style="display: none">'+ data[index].marca_nombre+'</div>'+
+                        '<div style="display: none">'+ decodeEntities(data[index].articulo_detalle) +'</div>'+
+                    '</div>'+
+                '</div>'+
             '</li>';
 
 
@@ -72,4 +79,21 @@ function fillTable(data){
 
     }
 
+    fillActions();
+}
+
+
+function fillActions(){
+
+
+    $(".item-content").click(function(){
+
+        console.log($(this).data('id'))
+    });
+}
+
+function decodeEntities(encodedString) {
+    var textArea = document.createElement('textarea');
+    textArea.innerHTML = encodedString;
+    return textArea.value;
 }
