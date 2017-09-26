@@ -22,7 +22,7 @@ function deleteDatos()
 
 
     $db = new MySQL();
-    $a = $post_vars['table_field_rubro_id'];
+    $a = $post_vars['table_field_marca_id'];
     $result = $db->consulta("delete from marcas where marca_id = '$a'");
     $mensaje = "No pudo Eliminar.";
     $estado = "false";

@@ -249,7 +249,9 @@ function loadScript(url, callback)
 
     				Sort: function (field, reverse, primer)
     				{
-    					var key = primer ? function(x) {return primer(x[field])} :  function(x) {return x[field]};
+    				    console.dir(reverse);
+    				    console.dir(primer);
+    					var key = primer ? function(x) { return primer(x[field])} :  function(x) {return x[field]};
 					   	reverse = !reverse ? 1 : -1;
 
 					   return function (a, b) {
@@ -327,8 +329,8 @@ function loadScript(url, callback)
     				},
                     doTable : function(obj,dataset)
                               {
-                                  console.dir(dataset);
-                                  //console.dir(obj);
+
+
                                     var id = $(obj).attr("id");
 									var display;
                                     var visible = (obj.Visible=="false") ? 'display:none' : '';
@@ -368,8 +370,9 @@ function loadScript(url, callback)
                                         html +="<tbody>"
                                         html +="<tr class='clickable-row' data-href='url://#'></tr>"
 
-                                        dataset.values.sort(methods.Sort(criteria, criteria_flag, function(a){return a}));
-                                        
+                                       dataset.values.sort(methods.Sort(criteria, criteria_flag, function(a){return a}));
+                                    console.dir(criteria);
+
                                         var fixed_rows = parseInt(obj.datasource.fixedrows) - parseInt(dataset.values.length)  ;
 
                                         for(var k in dataset.values  )
@@ -393,17 +396,32 @@ function loadScript(url, callback)
                                                             display = "";
                                                         }
 
-                                                        var data = dataset.values[k][t].replace("&lt;","")
 
-														data = data.replace("p&gt;","");
-                                                        data = data.replace("&lt;","<");
-                                                        data = data.replace("p&gt;",">");
-                                                        data = data.replace("&quot;","'");
+                                                        var data = dataset.values[k][t];
 
-                                                        data = data.replace("p&gt;","");
-                                                        data = data.replace("&lt;","<");
-                                                        data = data.replace("p&gt;",">");
-                                                        data = data.replace("&quot;","'");
+
+
+
+                                                        if(data != null ) {
+
+
+                                                            var pattern = /&quot;/g;
+                                                            var pattern2 = /&lt;/g;
+                                                            var pattern3 = /&gt;/g;
+
+                                                                re = new RegExp(pattern);
+                                                                re2 = new RegExp(pattern2);
+                                                                re3 = new RegExp(pattern3);
+
+
+
+                                                                data = data.replace(re, "\'")
+                                                            data = data.replace(re2, "<")
+                                                            data = data.replace(re3, ">")
+
+                                                            }
+
+
 
 
 
@@ -444,6 +462,7 @@ function loadScript(url, callback)
 		                                    html +="<ul class='pagination' style='"+visible+"' > <span class='pagination-info'>Mostrando "+dataset.info[0].rows+" resultados de "+dataset.info[0].total_rows+" en un total de "+dataset.info[0].page_count+" páginas.</span>"
 	                                        for(t=0; t<dataset.info[0].page_count;t++)
 	                                        {
+
 	                                        	if(parseInt(t+1) == dataset.info[0].page)
 	                                        	{
 													html +="<li id='"+id+"_page-"+t+"' class='active'><a href='javascript:;'>"+parseInt(t+1)+"</a></li>"
@@ -461,23 +480,7 @@ function loadScript(url, callback)
 	                                        $("#"+id).append(html);
 
 
-                                            for(var k in dataset.values  )
-                                            {
-                                                var cant_columns=0, cant_columns_query=0
 
-                                                for(i=0;i<obj.Columnas.length;i++)
-                                                {
-                                                    cant_columns=i+1
-                                                    var t = obj.Columnas[i].index
-
-
-
-
-                                                        //$("#"+t+"_"+k).append(dataset.values[k][t]);
-
-                                                }
-
-                                            }
 
 											for(t=0; t<dataset.info[0].page_count;t++)
 	                                        {
@@ -485,7 +488,7 @@ function loadScript(url, callback)
 	                                        	$("#"+ id + "_page-"+t+"").click(function () 
 	                                        	{
 	                                        		page = $(this).attr("id").split('-');
-	                                        		methods.getDatos(obj,parseInt(page[1])+1,methods.doTable); 
+	                                        		methods.getDatos(obj,parseInt(page[1])+1,methods.doTable);
 	                                        	});
 	                                    	}
 
@@ -526,8 +529,12 @@ function loadScript(url, callback)
                                         		$("#"+id+"_header_"+obj.Columnas[i].index).click(function()
                                         		{
 
-                                        			var res = $(this).attr("id").split("_", 3);
-                                        			criteria = res[2];
+
+                                        			var res = $(this).attr("id").split("_", 4);
+                                        			//console.dir(res);
+
+
+                                        			criteria = res[2]+"_"+res[3];
                                         			if(criteria_flag == false)
                                         			{
                                         				criteria_flag=true;

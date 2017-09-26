@@ -32,8 +32,8 @@ jQuery(document).ready(function($)
         method : "GET",
         datatype: "json",
         pagesize: 10,
-        paginate: "false",
-        fixedrows: "12"
+        paginate: "true",
+        fixedrows: "10"
     };
 
 

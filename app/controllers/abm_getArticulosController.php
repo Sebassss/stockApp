@@ -133,9 +133,9 @@ function getDatos()
 {
 
 
-if(isset($_POST['pagesize']))
+if(isset($_GET['pagesize']))
 {
-    $TAMANO_PAGINA = $_POST['pagesize'];
+    $TAMANO_PAGINA = $_GET['pagesize'];
 }
 else
 {
@@ -144,9 +144,9 @@ else
 
 //examino la página a mostrar y el inicio del registro a mostrar
 
-if(isset($_POST['page']))
+if(isset($_GET['page']))
 {
-    $pagina = $_POST["page"];
+    $pagina = $_GET["page"];
     if (!$pagina)
     {
         $inicio = 0;
@@ -181,6 +181,7 @@ $consulta = $db->Consulta("select a.articulo_id, a.proveedor_id,p.proveedor_nomb
                                   left join marcas m on m.marca_id=a.marca_id
                                   left join proveedores p on p.proveedor_id=a.proveedor_id 
                                   left join depositos d on d.deposito_id = a.deposito_id limit ". $inicio. ",". $TAMANO_PAGINA.";");
+
 
 $x = array();
 
