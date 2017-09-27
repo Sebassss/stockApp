@@ -39,8 +39,6 @@ $(function(){
     });
 
 
-
-
 });
 
 function fillTable(data){
@@ -52,8 +50,10 @@ function fillTable(data){
 
         var htmlBadge;
 
-        if(data[index].articulo_cantidad <= 1){
+        if(data[index].articulo_cantidad == 0){
             htmlBadge = '<span class="badge  bg-red">'+ data[index].articulo_cantidad +'</span>';
+        }else if(data[index].articulo_cantidad <= 1){
+            htmlBadge = '<span class="badge  bg-orange">'+ data[index].articulo_cantidad +'</span>';
         }else{
             htmlBadge = '<span class="badge  bg-green">'+ data[index].articulo_cantidad +'</span>';
         }
@@ -88,12 +88,58 @@ function fillActions(){
 
     $(".item-content").click(function(){
 
-        console.log($(this).data('id'))
+        //console.log($(this).data('id'))
+        detailPopUp($(this).data('id'));
     });
 }
 
+/*https://stackoverflow.com/questions/1147359/how-to-decode-html-entities-using-jquery*/
 function decodeEntities(encodedString) {
     var textArea = document.createElement('textarea');
     textArea.innerHTML = encodedString;
     return textArea.value;
+}
+
+
+
+
+function detailPopUp(id){
+
+
+    var encontrado;
+
+
+    for(var index in articulos){
+
+        if(articulos[index].articulo_id == id){
+
+            //console.log(articulos[index])
+
+            encontrado = articulos[index];
+        }
+
+    }
+
+
+    var popupHTML =
+        '<div class="popup">'+
+            '<div class="content-block">'+
+                '<div class="row">' +
+                    '<div class="col-auto">' +
+                        '<h4>' + encontrado.articulo_nombre +'</div></h4>'+
+                '</div>'+
+                '<div class="row">' +
+                    '<div class="col-100 detalle">' +
+                        decodeEntities(encontrado.articulo_detalle) +
+                    '</div>'+
+                '</div>'+
+            '</div>'+
+        '</div>';
+
+
+
+
+
+    myApp.popup(popupHTML);
+
 }

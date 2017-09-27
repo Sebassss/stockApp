@@ -1,3 +1,24 @@
 .badge {
     font-size: 20px !important;
 }
+
+.chip {
+
+    background-color: #444 !important;
+    color: lightgrey !important;
+}
+
+.rubro {
+
+    color: grey;
+}
+
+.detalle {
+
+    align-content: center;
+}
+
+.detalle img{
+
+
+}
