@@ -15,10 +15,22 @@
 
 .detalle {
 
-    align-content: center;
+    text-align: center;
 }
 
 .detalle img{
 
+    height: 200px;
+    width: auto;
+}
 
+.popup {
+
+    background-color: #212121 !important;
+    color: white;
+}
+
+.demo-popover {
+
+    color: white !important;
 }

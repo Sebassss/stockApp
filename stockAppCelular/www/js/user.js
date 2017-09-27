@@ -48,25 +48,17 @@ function fillTable(data){
 
     for ( var index in data){
 
-        var htmlBadge;
-
-        if(data[index].articulo_cantidad == 0){
-            htmlBadge = '<span class="badge  bg-red">'+ data[index].articulo_cantidad +'</span>';
-        }else if(data[index].articulo_cantidad <= 1){
-            htmlBadge = '<span class="badge  bg-orange">'+ data[index].articulo_cantidad +'</span>';
-        }else{
-            htmlBadge = '<span class="badge  bg-green">'+ data[index].articulo_cantidad +'</span>';
-        }
-
         var html =
             '<li class="item-content"  data-id="'+ data[index].articulo_id +'">'+
                 '<div class="item-inner">'+
-                    htmlBadge +
+                    colorBadge(data[index].articulo_cantidad) +
                     '<div class="item-title">'+ data[index].articulo_nombre +
                         '<br>'+
                         '<div class="chip">' +
                             '<div class="chip-label">'+
-                        data[index].deposito_nombre + '</div></div>' +
+                                data[index].deposito_nombre +
+                            '</div>' +
+                        '</div>' +
                         '<div class="rubro" >'+ data[index].rubro_nombre+'</div>'+
                         '<div style="display: none">'+ data[index].marca_nombre+'</div>'+
                         '<div style="display: none">'+ decodeEntities(data[index].articulo_detalle) +'</div>'+
@@ -122,24 +114,62 @@ function detailPopUp(id){
 
 
     var popupHTML =
+
         '<div class="popup">'+
+            '<div class="navbar">'+
+                '<div class="navbar-inner navbarMenu">'+
+                    '<div class="left">'+
+                        '<a href="#" class="link back close-popup">'+
+                        '<i class="icon icon-back"></i>'+
+                        '<span>Volver</span>'+
+                        '</a>'+
+                    '</div>'+
+                    '<div class="center">En stock:' + colorBadge( encontrado.articulo_cantidad) +'</span></div>'+
+                '</div>'+
+            '</div>'+
+            '<a href="#" class="floating-button floating-button-to-popover open-popover color-purple">'+
+                '<i class="icon icon-plus"></i>'+
+            '</a>'+
             '<div class="content-block">'+
                 '<div class="row">' +
                     '<div class="col-auto">' +
-                        '<h4>' + encontrado.articulo_nombre +'</div></h4>'+
+                        '<div class="chip">' +
+                            '<div class="chip-label">'+
+                                encontrado.deposito_nombre +
+                            '</div>' +
+                        '</div>' +
+                        '<h4> Marca: ' + encontrado.marca_nombre +'</h4>' +
+                        '<h4> Modelo: ' + encontrado.articulo_nombre +'</h4>' +
+                        '<h4> Rubro: ' + encontrado.rubro_nombre +'</h4>' +
+                        '<h4> Proveedor: ' + encontrado.proveedor_nombre +'</h4>' +
+                    '</div>'+
                 '</div>'+
                 '<div class="row">' +
+                    '<h4>Detalle:</h4>' +
                     '<div class="col-100 detalle">' +
-                        decodeEntities(encontrado.articulo_detalle) +
+                        '<p>'+ decodeEntities(encontrado.articulo_detalle) + '</p>' +
                     '</div>'+
                 '</div>'+
             '</div>'+
         '</div>';
 
 
-
-
-
     myApp.popup(popupHTML);
 
+}
+
+
+function colorBadge(cant){
+
+    var htmlBadge;
+
+    if(cant == 0){
+        htmlBadge = '<span class="badge  bg-red">'+ cant +'</span>';
+    }else if(cant <= 1){
+        htmlBadge = '<span class="badge  bg-orange">'+ cant +'</span>';
+    }else{
+        htmlBadge = '<span class="badge  bg-green">'+ cant+'</span>';
+    }
+
+    return htmlBadge;
 }
