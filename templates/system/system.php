@@ -229,7 +229,7 @@ if(!isset($_SESSION['menu'])) {
     </header>
 
     <div class="breadcrumb">
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi eaque eius esse et in ipsam laboriosam laudantium, nemo numquam optio repellat tempore. At, commodi dolor harum hic id ratione sapiente.</p>
+        <p>PIOR es nada.</p>
     </div>
 
 

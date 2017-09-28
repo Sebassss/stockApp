@@ -10,10 +10,17 @@
 
 require_once "../app/data/class.conexion.php";
 
+function insertTolog($valor, $usuario_id)
+{
+
+    $db = new MySQL();
+    $result = $db->Consulta("insert into logs (log,usuario_id)  values('$valor','$usuario_id')");
+}
 
 //Elimina registros a partir del modal
 function deleteDatos()
 {
+
 
     /*Parser para  metodos put y delete*/
     parse_str(file_get_contents("php://input"),$post_vars);
@@ -100,6 +107,7 @@ function descArticulos()
     $a = $post_vars['articulo_id'];
     $b = $post_vars['usuario_id'];
     $c = $post_vars['articulo_cantidad'];
+    $d = $post_vars['articulo_comentario'];
 
     $result_rows = $db->Consulta("select articulo_cantidad from articulos where articulo_id=".$a);
 
@@ -113,6 +121,7 @@ function descArticulos()
         if ($resta < 0)
         {
             $mensaje = "No puedes superar el stock actual. Disponibles: ".$tmp['articulo_cantidad'];
+            insertTolog($mensaje,$b);
         }
         else
         {
@@ -120,16 +129,28 @@ function descArticulos()
             $result = $db->Consulta("update articulos set articulo_cantidad=" . $resta . " where articulo_id=" . $a);
 
             if (!$result) {
+
                 $mensaje = "Procesado correctamente.";
                 $estado = "true";
+
+                $query = $db->Consulta("select a.articulo_cantidad,a.articulo_nombre, m.marca_nombre, r.rubro_nombre,d.deposito_nombre from articulos a 
+                                left join marcas m on m.marca_id = a.marca_id
+                                left join rubros r on r.rubro_id = a.rubro_id
+                                left join depositos d on d.deposito_id = a.deposito_id
+                            where a.articulo_id=".$a);
+
+                $articulo = $db->fetch_array($query);
+                insertTolog("Se descontó del stock en depósito: ".$articulo['deposito_nombre']." el rubro : ".$articulo['rubro_nombre']. " Marca: ".$articulo['marca_nombre']." Articulo: ".$articulo['articulo_nombre']." Cantidad: ".$c." quedando en stock ".$articulo['articulo_cantidad']." disponibles."." Comentarios: ".$d,$b);
             } else {
                 $mensaje = "Error: " . $result;
+                insertTolog("Se produjo un error :".$mensaje,$b);
             }
         }
     }
     else
     {
         $mensaje = "No hay stock.";
+        insertTolog($mensaje,$b);
     }
     $response = array(
         'mensaje' => $mensaje,
