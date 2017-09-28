@@ -107,14 +107,29 @@ function descArticulos()
     $estado = "false";
 
     if($db->num_rows($result_rows)>0) {
-        $result = $db->Consulta("update articulos set articulo_cantidad=".$c." where articulo_id=".$a);
 
-        if (!$result) {
-            $mensaje = "Procesado correctamente.";
-            $estado = "true";
-        } else {
-            $mensaje = "Error: " . $result;
+        $tmp = $db->fetch_array($result_rows);
+        $resta = $tmp['articulo_cantidad'] - $c;
+        if ($resta < 0)
+        {
+            $mensaje = "No puedes superar el stock actual. Disponibles: ".$tmp['articulo_cantidad'];
         }
+        else
+        {
+
+            $result = $db->Consulta("update articulos set articulo_cantidad=" . $resta . " where articulo_id=" . $a);
+
+            if (!$result) {
+                $mensaje = "Procesado correctamente.";
+                $estado = "true";
+            } else {
+                $mensaje = "Error: " . $result;
+            }
+        }
+    }
+    else
+    {
+        $mensaje = "No hay stock.";
     }
     $response = array(
         'mensaje' => $mensaje,
