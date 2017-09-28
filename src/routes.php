@@ -233,7 +233,7 @@ $app->get('/cerrar_sesion', function($req, $res) use($app){
     });
 
     //DESCUENTA ARTICULOS
-    $app->post('/abm_descArticulos', function($req, $res) use($app){
+    $app->put('/abm_descArticulos', function($req, $res) use($app){
         require_once "../app/controllers/abm_getArticulosController.php";
         return descArticulos();
     });

@@ -93,12 +93,13 @@ function editDatos()
 function descArticulos()
 {
 
+    parse_str(file_get_contents("php://input"),$post_vars);
 
     $db = new MySQL();
 
-    $a = $_POST['articulo_id'];
-    $b = $_POST['usuario_id'];
-    $c = $_POST['cantidad'];
+    $a = $post_vars['articulo_id'];
+    $b = $post_vars['usuario_id'];
+    $c = $post_vars['articulo_cantidad'];
 
     $result_rows = $db->Consulta("select articulo_cantidad from articulos where articulo_id=".$a);
 
