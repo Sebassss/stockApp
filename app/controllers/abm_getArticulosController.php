@@ -100,13 +100,13 @@ function descArticulos()
     $b = $_POST['usuario_id'];
     $c = $_POST['cantidad'];
 
-    $result_rows = $db->Consulta("select articulo_cantidad from articulos where articulo_id='".$a."'");
+    $result_rows = $db->Consulta("select articulo_cantidad from articulos where articulo_id=".$a);
 
     $mensaje = "No pudo guardar.";
     $estado = "false";
 
     if($db->num_rows($result_rows)>0) {
-        $result = $db->Consulta("update articulos set articulo_cantidad='".$c."' where articulo_id='".$a."'");
+        $result = $db->Consulta("update articulos set articulo_cantidad=".$c." where articulo_id=".$a);
 
         if (!$result) {
             $mensaje = "Procesado correctamente.";
