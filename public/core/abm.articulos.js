@@ -39,7 +39,7 @@ jQuery(document).ready(function($)
 
     var x = $('#table').Grid({  // calls the init method
 
-        Titulo : 'Artículos',
+        Titulo : 'Stock',
         ABM: Options,
         Columnas: colheaders,
         edit_options : edit_options,
