@@ -1,0 +1,36 @@
+.badge {
+    font-size: 20px !important;
+}
+
+.chip {
+
+    background-color: #444 !important;
+    color: lightgrey !important;
+}
+
+.rubro {
+
+    color: grey;
+}
+
+.detalle {
+
+    text-align: center;
+}
+
+.detalle img{
+
+    height: 200px;
+    width: auto;
+}
+
+.popup {
+
+    background-color: #212121 !important;
+    color: white;
+}
+
+.demo-popover {
+
+    color: white !important;
+}
