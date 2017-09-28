@@ -227,10 +227,16 @@ $app->get('/cerrar_sesion', function($req, $res) use($app){
         return getDatos();
     });
 
-$app->get('/abm_getArticulos', function($req, $res) use($app){
-    require_once "../app/controllers/abm_getArticulosController.php";
-    return getDatos2();
-});
+    $app->get('/abm_getArticulos', function($req, $res) use($app){
+        require_once "../app/controllers/abm_getArticulosController.php";
+        return getDatos2();
+    });
+
+    //DESCUENTA ARTICULOS
+    $app->post('/abm_descArticulos', function($req, $res) use($app){
+        require_once "../app/controllers/abm_getArticulosController.php";
+        return descArticulos();
+    });
 
     //GUARDA ARTICULOS
     $app->post('/abm_getArticulos', function($req, $res) use($app){

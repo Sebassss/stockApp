@@ -88,6 +88,41 @@ function editDatos()
 
 }
 
+
+//Descuenta/Usa articulos
+function descArticulos()
+{
+
+
+    $db = new MySQL();
+
+    $a = $_POST['articulo_id'];
+    $b = $_POST['usuario_id'];
+    $c = $_POST['cantidad'];
+
+    $result_rows = $db->consulta("select articulo_cantidad from articulos where articulo_id=".$a);
+
+    $mensaje = "No pudo guardar.";
+    $estado = "false";
+
+    if($db->num_rows($result_rows)>0) {
+        $result = $db->consulta("update articulos set articulo_cantidad=" . $c . " where articulo_id=" . $a);
+
+        if (!$result) {
+            $mensaje = "Procesado correctamente.";
+            $estado = "true";
+        } else {
+            $mensaje = "Error: " . $result;
+        }
+    }
+    $response = array(
+        'mensaje' => $mensaje,
+        'estado' => $estado,
+    );
+
+    echo json_encode($response);
+}
+
 //Guarda registros a partir del modal
 function saveDatos()
 {
