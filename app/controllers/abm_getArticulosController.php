@@ -93,6 +93,8 @@ function editDatos()
 function descArticulos()
 {
 
+    print_r( $_POST);
+    die;
 
     $db = new MySQL();
 
