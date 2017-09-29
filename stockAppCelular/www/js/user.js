@@ -127,36 +127,94 @@ function detailPopUp(id){
                     '<div class="center">En stock:' + colorBadge( encontrado.articulo_cantidad) +'</span></div>'+
                 '</div>'+
             '</div>'+
-            '<a href="#" class="floating-button floating-button-to-popover open-popover color-purple">'+
-                '<i class="icon icon-plus"></i>'+
-            '</a>'+
-            '<div class="content-block">'+
-                '<div class="row">' +
-                    '<div class="col-auto">' +
-                        '<div class="chip">' +
-                            '<div class="chip-label">'+
-                                encontrado.deposito_nombre +
-                            '</div>' +
-                        '</div>' +
-                        '<h4> Marca: ' + encontrado.marca_nombre +'</h4>' +
-                        '<h4> Modelo: ' + encontrado.articulo_nombre +'</h4>' +
-                        '<h4> Rubro: ' + encontrado.rubro_nombre +'</h4>' +
-                        '<h4> Proveedor: ' + encontrado.proveedor_nombre +'</h4>' +
-                    '</div>'+
+                '<div class="list-block cards-list">'+
+                    '<ul>'+
+                        '<li class="card">'+
+                            '<div class="card-header">Información del artículo</div>'+
+                            '<div class="card-content">'+
+                                '<div class="card-content-inner">' +
+                                    '<div class="content-block">'+
+                                        '<div class="row">' +
+                                            '<div class="col-auto">' +
+                                                '<div class="chip">' +
+                                                    '<div class="chip-label">'+
+                                                    encontrado.deposito_nombre +
+                                                    '</div>' +
+                                                '</div>' +
+                                                '<h4> Marca: ' + encontrado.marca_nombre +'</h4>' +
+                                                '<h4> Modelo: ' + encontrado.articulo_nombre +'</h4>' +
+                                                '<h4> Rubro: ' + encontrado.rubro_nombre +'</h4>' +
+                                                '<h4> Proveedor: ' + encontrado.proveedor_nombre +'</h4>' +
+                                            '</div>'+
+                                        '</div>'+
+                                        '<div class="row">' +
+                                            '<h4>Detalle:</h4>' +
+                                            '<div class="col-100 detalle">' +
+                                                '<p>'+ decodeEntities(encontrado.articulo_detalle) + '</p>' +
+                                            '</div>'+
+                                        '</div>'+
+                                    '</div>'+
+                                '</div>'+
+                            '</div>'+
+                        '</li>'+
+                        '<li class="card">'+
+                            '<div class="card-header">Ingrese cantidad a retirar</div>'+
+                            '<div class="card-content">'+
+                                '<div class="card-content-inner">Card content</div>'+
+                            '</div>'+
+                            '<div class="card-footer">' +
+                                '<a href="#" class="button color-red">Red</a>'+
+                            '</div>'+
+                        '</li>'+
+                    '</ul>'+
                 '</div>'+
-                '<div class="row">' +
-                    '<h4>Detalle:</h4>' +
-                    '<div class="col-100 detalle">' +
-                        '<p>'+ decodeEntities(encontrado.articulo_detalle) + '</p>' +
-                    '</div>'+
-                '</div>'+
-            '</div>'+
-        '</div>';
+            '</div>';
 
 
     myApp.popup(popupHTML);
 
+
+    $("#btnDescontar").click(function(){
+
+        /*
+        $.ajax({
+            url: 'http://10.64.65.200:84/stockapp/public/abm_descArticulos',
+            method: "PUT",
+            data: {
+                'articulo_id': 12,
+                'articulo_cantidad': 0,
+                'usuario_id': 1,
+                'articulo_comentario': "texto"
+            },
+            dataType: "json",
+            success: function(data)
+            {
+                console.dir(data);
+
+            },
+            error: function(error)
+            {
+                console.log(error);
+
+            }
+
+        });*/
+
+        openSelector(id);
+    });
+
 }
+
+
+function openSelector(id){
+
+
+
+
+
+}
+
+
 
 
 function colorBadge(cant){
