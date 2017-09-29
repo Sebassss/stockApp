@@ -39,3 +39,16 @@
 
     color: white !important;
 }
+
+.botonera a {
+
+    width: 100%;
+    margin: 0 auto;
+}
+
+.inputs {
+    color: #000 !important;
+    text-align: center !important;
+    background-color: white !important;
+    width: 100%;
+}

@@ -35,6 +35,7 @@ function login()
         success: function(data)
         {
             console.log(data)
+
             myApp.hidePreloader();
 
             if(data.estado === 'NONE'){
@@ -43,7 +44,7 @@ function login()
             }else if(data.estado === 'HABILITADO'){
 
                 //console.log("se logea")
-                window.location.replace("a_index.html");
+                window.location.replace("a_index.html?usuario_id="+data.usuario_id);
             }
 
 

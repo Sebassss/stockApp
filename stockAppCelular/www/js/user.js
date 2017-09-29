@@ -261,6 +261,7 @@ function detailPopUp(id){
                             success: function(data)
                             {
                                 myApp.alert("El artículo se descontó correctamente");
+                                location.reload();
 
                             },
                             error: function(error)
