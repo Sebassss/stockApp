@@ -11,7 +11,23 @@ var $$ = Dom7;
 
 var articulos;
 
+var usuario_id;
+
+function GetURLParameter(sParam) {
+    var sPageURL = window.location.search.substring(1);
+    var sURLVariables = sPageURL.split('&');
+    for (var i = 0; i < sURLVariables.length; i++) {
+        var sParameterName = sURLVariables[i].split('=');
+        if (sParameterName[0] == sParam) {
+            return sParameterName[1];
+        }
+    }
+}
+
+
 $(function(){
+
+    usuario_id = GetURLParameter('usuario_id');
 
     myApp.showPreloader('Espere...');
 
@@ -111,7 +127,7 @@ function detailPopUp(id){
         }
 
     }
-
+    //lo separo en 2 porque sino el IDE no me lo resalta
 
     var popupHTML =
 
@@ -138,7 +154,7 @@ function detailPopUp(id){
                                             '<div class="col-auto">' +
                                                 '<div class="chip">' +
                                                     '<div class="chip-label">'+
-                                                    encontrado.deposito_nombre +
+                                                        encontrado.deposito_nombre +
                                                     '</div>' +
                                                 '</div>' +
                                                 '<h4> Marca: ' + encontrado.marca_nombre +'</h4>' +
@@ -156,61 +172,113 @@ function detailPopUp(id){
                                     '</div>'+
                                 '</div>'+
                             '</div>'+
-                        '</li>'+
-                        '<li class="card">'+
-                            '<div class="card-header">Ingrese cantidad a retirar</div>'+
-                            '<div class="card-content">'+
-                                '<div class="card-content-inner">Card content</div>'+
+                        '</li>';
+
+
+
+    popupHTML = popupHTML +
+
+                '<li class="card">'+
+                    '<div class="card-header">Ingrese cantidad a retirar</div>'+
+                    '<div class="card-content">'+
+                        '<div class="card-content-inner">' +
+                            '<div class="row no-gutter">' +
+                                '<div class="col-33">' +
+                                    '<a href="#" class="button button-fill color-deeporange" id="btnMenos">menos</a>'+
+                                '</div>' +
+                                '<div class="col-33">' +
+                                    '<input id="elInput" class="inputs" type="number">'+
+                                '</div>' +
+                                '<div class="col-33">' +
+                                    '<a href="#" class="button button-fill color-green" id="btnMas">mas</a>'+
+                                '</div>'+
                             '</div>'+
-                            '<div class="card-footer">' +
-                                '<a href="#" class="button color-red">Red</a>'+
-                            '</div>'+
-                        '</li>'+
-                    '</ul>'+
-                '</div>'+
-            '</div>';
+                            '<br>'+
+                            '<div class="row no-gutter">' +
+                                '<h4>Puede ingresar un comentario</h4>'+
+                                '<input id="elComentario" type="text" class="inputs">'+
+                            '</div>' +
+                        '</div>'+
+                    '</div>'+
+                    '<div class="card-footer botonera">' +
+                        '<a href="#" class="button button-fill color-red" id="btnRetirar">Retirar</a>'+
+                    '</div>'+
+                '</li>'+
+           '</ul>'+
+       '</div>'+
+   '</div>';
+
+
 
 
     myApp.popup(popupHTML);
 
+    $("#elInput").val(0);
 
-    $("#btnDescontar").click(function(){
+    $("#btnMenos").click(function(){
 
-        /*
-        $.ajax({
-            url: 'http://10.64.65.200:84/stockapp/public/abm_descArticulos',
-            method: "PUT",
-            data: {
-                'articulo_id': 12,
-                'articulo_cantidad': 0,
-                'usuario_id': 1,
-                'articulo_comentario': "texto"
-            },
-            dataType: "json",
-            success: function(data)
-            {
-                console.dir(data);
+        if(parseInt($("#elInput").val()) > 0){
 
-            },
-            error: function(error)
-            {
-                console.log(error);
+            $("#elInput").val(parseInt( $("#elInput").val() )-1);
+        }
 
-            }
-
-        });*/
-
-        openSelector(id);
     });
 
-}
+    $("#btnMas").click(function(){
+
+        if(parseInt($("#elInput").val()) < encontrado.articulo_cantidad){
+
+            $("#elInput").val(parseInt( $("#elInput").val() )+1);
+        }
+
+    });
 
 
-function openSelector(id){
+
+
+    $("#btnRetirar").click(function(){
+
+        var modal = myApp.modal({
+            title: 'Está seguro de retirar ' + $("#elInput").val() + ' ' + encontrado.articulo_nombre + ' ?',
+            buttons: [
+                {
+                    text: 'Cancelar'
+                },
+                {
+                    text: 'Retirar',
+                    bold: true,
+                    onClick: function () {
+                        $.ajax({
+                            url: 'http://10.64.65.200:84/stockapp/public/abm_descArticulos',
+                            method: "PUT",
+                            data: {
+                                'articulo_id': encontrado.articulo_id,
+                                'articulo_cantidad': $("#elInput").val(),
+                                'usuario_id': usuario_id,
+                                'articulo_comentario': $("#elComentario").val()
+                            },
+                            dataType: "json",
+                            success: function(data)
+                            {
+                                myApp.alert("El artículo se descontó correctamente");
+
+                            },
+                            error: function(error)
+                            {
+
+                                myApp.alert("CUIDADO, no se actualizó el stock chango!!\n" + error);
+                            }
+
+                        });
+                    }
+                }
+            ]
+        });
 
 
 
 
+    });
 
 }
 
