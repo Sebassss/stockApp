@@ -23,7 +23,7 @@ function login()
     myApp.showPreloader('Espere...');
 
     $.ajax({
-        url: 'http://200.0.236.210:84/stockapp/public/checkUserCredentials',
+        url: 'http://otrsminsalud.sanjuan.gob.ar/stockapp/public/checkUserCredentials',
         type: "GET",
         global: true,
         cache:false,
