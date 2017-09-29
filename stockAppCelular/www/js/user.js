@@ -238,45 +238,51 @@ function detailPopUp(id){
 
     $("#btnRetirar").click(function(){
 
-        var modal = myApp.modal({
-            title: 'Está seguro de retirar ' + $("#elInput").val() + ' ' + encontrado.articulo_nombre + ' ?',
-            buttons: [
-                {
-                    text: 'Cancelar'
-                },
-                {
-                    text: 'Retirar',
-                    bold: true,
-                    onClick: function () {
-                        $.ajax({
-                            url: 'http://10.64.65.200:84/stockapp/public/abm_descArticulos',
-                            method: "PUT",
-                            data: {
-                                'articulo_id': encontrado.articulo_id,
-                                'articulo_cantidad': $("#elInput").val(),
-                                'usuario_id': usuario_id,
-                                'articulo_comentario': $("#elComentario").val()
-                            },
-                            dataType: "json",
-                            success: function(data)
-                            {
-                                myApp.alert("El artículo se descontó correctamente");
-                                location.reload();
 
-                            },
-                            error: function(error)
-                            {
+        if($("#elInput").val() == 0){
 
-                                myApp.alert("CUIDADO, no se actualizó el stock chango!!\n" + error);
-                            }
+            myApp.alert("No se ingresó una cantidad mayor a 0");
+        }else if($("#elComentario").val() != ''){
 
-                        });
+            var modal = myApp.modal({
+                title: 'Está seguro de retirar ' + $("#elInput").val() + ' ' + encontrado.articulo_nombre + ' ?' + msgComentario,
+                buttons: [
+                    {
+                        text: 'Cancelar'
+                    },
+                    {
+                        text: 'Retirar',
+                        bold: true,
+                        onClick: function () {
+                            $.ajax({
+                                url: 'http://10.64.65.200:84/stockapp/public/abm_descArticulos',
+                                method: "PUT",
+                                data: {
+                                    'articulo_id': encontrado.articulo_id,
+                                    'articulo_cantidad': $("#elInput").val(),
+                                    'usuario_id': usuario_id,
+                                    'articulo_comentario': $("#elComentario").val()
+                                },
+                                dataType: "json",
+                                success: function (data) {
+                                    myApp.alert("El artículo se descontó correctamente");
+                                    location.reload();
+
+                                },
+                                error: function (error) {
+
+                                    myApp.alert("CUIDADO, no se actualizó el stock chango!!\n" + error);
+                                }
+
+                            });
+                        }
                     }
-                }
-            ]
-        });
+                ]
+            });
 
-
+        }else{
+            myApp.alert("No puede retirar artículos sin un comentario");
+        }
 
 
     });
