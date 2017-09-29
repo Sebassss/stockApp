@@ -23,7 +23,7 @@ function login()
     myApp.showPreloader('Espere...');
 
     $.ajax({
-        url: 'http://10.64.65.200:84/stockapp/public/checkUserCredentials',
+        url: 'http://gedoc.sanjuan.gov.ar:84/stockapp/public/checkUserCredentials',
         type: "GET",
         global: true,
         cache:false,

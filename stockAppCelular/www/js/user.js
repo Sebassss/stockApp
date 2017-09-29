@@ -34,7 +34,7 @@ $(function(){
     var mySearchbar = $$('.searchbar')[0].f7Searchbar;
 
     $.ajax({
-        url: 'http://10.64.65.200:84/stockapp/public/abm_getArticulos',
+        url: 'http://gedoc.sanjuan.gov.ar:84/stockapp/public/abm_getArticulos',
         type: "GET",
         dataType: "json",
         success: function(data)
@@ -255,7 +255,7 @@ function detailPopUp(id){
                         bold: true,
                         onClick: function () {
                             $.ajax({
-                                url: 'http://10.64.65.200:84/stockapp/public/abm_descArticulos',
+                                url: 'http://gedoc.sanjuan.gov.ar:84/stockapp/public/abm_descArticulos',
                                 method: "PUT",
                                 data: {
                                     'articulo_id': encontrado.articulo_id,
