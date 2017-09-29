@@ -120,7 +120,15 @@ function descArticulos()
         $resta = $tmp['articulo_cantidad'] - $c;
         if ($resta < 0)
         {
-            $mensaje = "No puedes superar el stock actual. Disponibles: ".$tmp['articulo_cantidad'];
+            $query = $db->Consulta("select a.articulo_cantidad,a.articulo_nombre, m.marca_nombre, r.rubro_nombre,d.deposito_nombre from articulos a 
+                                left join marcas m on m.marca_id = a.marca_id
+                                left join rubros r on r.rubro_id = a.rubro_id
+                                left join depositos d on d.deposito_id = a.deposito_id
+                            where a.articulo_id=".$a);
+
+            $articulo = $db->fetch_array($query);
+
+            $mensaje = "No puedes superar el stock, Rubro : ".$articulo['rubro_nombre']." Marca : ".$articulo['marca_nombre'].", Artículo : ".$articulo['articulo_nombre'].", Disponibles: ".$tmp['articulo_cantidad'];
             insertTolog($mensaje,$b);
         }
         else
