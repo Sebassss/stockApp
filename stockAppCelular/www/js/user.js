@@ -34,7 +34,7 @@ $(function(){
     var mySearchbar = $$('.searchbar')[0].f7Searchbar;
 
     $.ajax({
-        url: 'http://gedoc.sanjuan.gov.ar:84/stockapp/public/abm_getArticulos',
+        url: 'http://200.0.236.210:84/stockapp/public/abm_getArticulos',
         type: "GET",
         dataType: "json",
         success: function(data)
@@ -239,50 +239,54 @@ function detailPopUp(id){
     $("#btnRetirar").click(function(){
 
 
-        if($("#elInput").val() == 0){
+        if(parseInt($("#elInput").val()) == 0){
 
             myApp.alert("No se ingresó una cantidad mayor a 0");
-        }else if($("#elComentario").val() != ''){
+        }else {
 
-            var modal = myApp.modal({
-                title: 'Está seguro de retirar ' + $("#elInput").val() + ' ' + encontrado.articulo_nombre + ' ?' + msgComentario,
-                buttons: [
-                    {
-                        text: 'Cancelar'
-                    },
-                    {
-                        text: 'Retirar',
-                        bold: true,
-                        onClick: function () {
-                            $.ajax({
-                                url: 'http://gedoc.sanjuan.gov.ar:84/stockapp/public/abm_descArticulos',
-                                method: "PUT",
-                                data: {
-                                    'articulo_id': encontrado.articulo_id,
-                                    'articulo_cantidad': $("#elInput").val(),
-                                    'usuario_id': usuario_id,
-                                    'articulo_comentario': $("#elComentario").val()
-                                },
-                                dataType: "json",
-                                success: function (data) {
-                                    myApp.alert("El artículo se descontó correctamente");
-                                    location.reload();
+            if(($("#elComentario").val() != '' )) {
+                var modal = myApp.modal({
+                    title: 'Está seguro de retirar ' + $("#elInput").val() + ' ' + encontrado.articulo_nombre + ' ?',
+                    buttons: [
+                        {
+                            text: 'Cancelar'
+                        },
+                        {
+                            text: 'Retirar',
+                            bold: true,
+                            onClick: function () {
+                                $.ajax({
+                                    url: 'http://200.0.236.210:84/stockapp/public/abm_descArticulos',
+                                    method: "PUT",
+                                    data: {
+                                        'articulo_id': encontrado.articulo_id,
+                                        'articulo_cantidad': $("#elInput").val(),
+                                        'usuario_id': usuario_id,
+                                        'articulo_comentario': $("#elComentario").val()
+                                    },
+                                    dataType: "json",
+                                    success: function (data) {
+                                        myApp.alert("El artículo se descontó correctamente");
+                                        location.reload();
 
-                                },
-                                error: function (error) {
+                                    },
+                                    error: function (error) {
 
-                                    myApp.alert("CUIDADO, no se actualizó el stock chango!!\n" + error);
-                                }
+                                        myApp.alert("CUIDADO, no se actualizó el stock chango!!\n" + error);
+                                    }
 
-                            });
+                                });
+                            }
                         }
-                    }
-                ]
-            });
-
-        }else{
-            myApp.alert("No puede retirar artículos sin un comentario");
+                    ]
+                });
+            }
+            else {
+                myApp.alert("No puede retirar artículos sin un comentario");
+            }
         }
+
+
 
 
     });
