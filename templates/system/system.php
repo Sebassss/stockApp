@@ -218,7 +218,7 @@ if(!isset($_SESSION['menu'])) {
                 <ul class="nav navbar-nav">
                 <?php
                 $menu = new Menu();
-                $menu->display_children(0,1);
+                $menu->display_children(0,1,$_SESSION['userCredentials']['usuario_id']);
                 ?>
                 </ul>
                 </div>

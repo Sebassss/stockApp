@@ -19,7 +19,7 @@ function checkUsuario()
     $db = new MySQL();
 
     $user = $_GET['txt_usr'];
-    $pwd = $_GET['txt_pwd'];
+    $pwd = md5($_GET['txt_pwd']);
 
     $sql = $db->Consulta("select usuario_id,usuario_estado, usuario_nombre, usuario_alias from usuarios where usuario_nombre = '$user' and usuario_clave = '$pwd' AND usuario_estado = 0");
 
