@@ -244,24 +244,64 @@ else
     $pagina=1;
 }
 
+$key =$_GET['key'];
+
+
 
 $db = new MySQL();
 
-$consulta = $db->Consulta("select a.articulo_id, a.proveedor_id,p.proveedor_nombre,a.marca_id,m.marca_nombre, a.rubro_id,r.rubro_nombre, a.articulo_nombre, a.articulo_detalle,a.articulo_codigo,a.articulo_cantidad,a.deposito_id, d.deposito_nombre from articulos a 
+    if($_GET['key'] != "")
+    {
+        $consulta = $db->Consulta("select a.articulo_id, a.proveedor_id,p.proveedor_nombre,a.marca_id,m.marca_nombre, a.rubro_id,r.rubro_nombre, a.articulo_nombre, a.articulo_detalle,a.articulo_codigo,a.articulo_cantidad,a.deposito_id, d.deposito_nombre from articulos a 
+                                  left join rubros r on r.rubro_id=a.rubro_id 
+                                  left join marcas m on m.marca_id=a.marca_id
+                                  left join proveedores p on p.proveedor_id=a.proveedor_id
+                                  left join depositos d on d.deposito_id = a.deposito_id
+                                  WHERE 
+                                              p.proveedor_nombre like '%$key%' OR
+                                              m.marca_nombre like '%$key%' OR 
+                                              r.rubro_nombre like '%$key%' OR 
+                                              a.articulo_nombre like '%$key%' OR 
+                                              a.articulo_detalle like '%$key%' OR
+                                              a.articulo_codigo like '%$key%' OR
+                                              a.articulo_cantidad like '%$key%' OR
+                                              d.deposito_nombre like '%$key%'");
+    }
+    else {
+        $consulta = $db->Consulta("select a.articulo_id, a.proveedor_id,p.proveedor_nombre,a.marca_id,m.marca_nombre, a.rubro_id,r.rubro_nombre, a.articulo_nombre, a.articulo_detalle,a.articulo_codigo,a.articulo_cantidad,a.deposito_id, d.deposito_nombre from articulos a 
                                   left join rubros r on r.rubro_id=a.rubro_id 
                                   left join marcas m on m.marca_id=a.marca_id
                                   left join proveedores p on p.proveedor_id=a.proveedor_id
                                   left join depositos d on d.deposito_id = a.deposito_id");
+    }
 $num_total_registros = $db->num_rows($consulta);
 $total_paginas = ceil($num_total_registros / $TAMANO_PAGINA);
 
 
-$consulta = $db->Consulta("select a.articulo_id, a.proveedor_id,p.proveedor_nombre,a.marca_id,m.marca_nombre, a.rubro_id,r.rubro_nombre, a.articulo_nombre, a.articulo_detalle,a.articulo_codigo,a.articulo_cantidad,a.deposito_id, d.deposito_nombre from articulos a 
+if($key !="") {
+    $consulta = $db->Consulta("select a.articulo_id, a.proveedor_id,p.proveedor_nombre,a.marca_id,m.marca_nombre, a.rubro_id,r.rubro_nombre, a.articulo_nombre, a.articulo_detalle,a.articulo_codigo,a.articulo_cantidad,a.deposito_id, d.deposito_nombre from articulos a 
                                   left join rubros r on r.rubro_id=a.rubro_id 
                                   left join marcas m on m.marca_id=a.marca_id
                                   left join proveedores p on p.proveedor_id=a.proveedor_id 
-                                  left join depositos d on d.deposito_id = a.deposito_id limit ". $inicio. ",". $TAMANO_PAGINA.";");
-
+                                  left join depositos d on d.deposito_id = a.deposito_id
+                                   WHERE 
+                                              p.proveedor_nombre like '%$key%' OR
+                                              m.marca_nombre like '%$key%' OR 
+                                              r.rubro_nombre like '%$key%' OR 
+                                              a.articulo_nombre like '%$key%' OR 
+                                              a.articulo_detalle like '%$key%' OR
+                                              a.articulo_codigo like '%$key%' OR
+                                              a.articulo_cantidad like '%$key%' OR
+                                              d.deposito_nombre like '%$key%' limit " . $inicio . "," . $TAMANO_PAGINA . ";");
+}
+else
+{
+    $consulta = $db->Consulta("select a.articulo_id, a.proveedor_id,p.proveedor_nombre,a.marca_id,m.marca_nombre, a.rubro_id,r.rubro_nombre, a.articulo_nombre, a.articulo_detalle,a.articulo_codigo,a.articulo_cantidad,a.deposito_id, d.deposito_nombre from articulos a 
+                                  left join rubros r on r.rubro_id=a.rubro_id 
+                                  left join marcas m on m.marca_id=a.marca_id
+                                  left join proveedores p on p.proveedor_id=a.proveedor_id 
+                                  left join depositos d on d.deposito_id = a.deposito_id limit " . $inicio . "," . $TAMANO_PAGINA . ";");
+}
 
 $x = array();
 
@@ -289,6 +329,7 @@ while($row = $db->fetch_array($consulta))
 
 $t = array(array(
     'rows' => $i,
+    'key' => $key,
     'page' => $pagina,
     'page_count' => $total_paginas,
     'total_rows' => $num_total_registros,

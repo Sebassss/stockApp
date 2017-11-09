@@ -3,6 +3,7 @@ jQuery(document).ready(function($)
 
     var Options = [
         {refresh: "true"},
+        {search: "true"},
         {add: "true"},
         {edit: "true"},
         {delete: "true"}];

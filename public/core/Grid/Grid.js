@@ -124,7 +124,7 @@ function loadScript(url, callback)
                                             $("#"+id+"_CrudModal").find("#resulttxt").show();
                                             setTimeout(function() {
                                             $("#"+id+"_CrudModal .close").click();
-                                            methods.getDatos(obj,1,methods.doTable);},1000);
+                                            methods.getDatos(obj,1,methods.doTable,"");},1000);
                                             obj.add_options.callback(data);
                                         }
                                         else
@@ -174,7 +174,7 @@ function loadScript(url, callback)
                                             $("#"+id+"_CrudModal").find("#resulttxt").show();
                                             setTimeout(function() {
                                                 $("#"+id+"_CrudModal .close").click();
-                                                methods.getDatos(obj,1,methods.doTable);},1000);
+                                                methods.getDatos(obj,1,methods.doTable,"");},1000);
                                         }
                                         else
                                         {
@@ -219,7 +219,7 @@ function loadScript(url, callback)
                                             $("#"+id+"_CrudModal").find("#resulttxt").show();
                                             setTimeout(function() {
                                                 $("#"+id+"_CrudModal .close").click();
-                                                methods.getDatos(obj,1,methods.doTable);},1000);
+                                                methods.getDatos(obj,1,methods.doTable,"");},1000);
                                         }
                                         else
                                         {
@@ -247,6 +247,12 @@ function loadScript(url, callback)
     					return ret;
     				},
 
+					Search: function(obj,key){
+                        //obj
+						console.dir(obj);
+                        methods.getDatos(obj,1,methods.doTable,key);
+					},
+
     				Sort: function (field, reverse, primer)
     				{
     				    console.dir(reverse);
@@ -259,7 +265,7 @@ function loadScript(url, callback)
 					     } 
     				},
 
-					getDatos : function (obj,page,callback)
+					getDatos : function (obj,page,callback,key)
     				{
 						$body = $("body");
     					var id = $(obj).attr("id");
@@ -273,6 +279,7 @@ function loadScript(url, callback)
 			                        data: { 
 			                        		pagesize: obj.datasource.pagesize, 
 			                        	    page: page,
+											key: key,
 			                        	  },
 			                        url: obj.datasource.url,
 			                        timeout: obj.timeout,
@@ -482,15 +489,7 @@ function loadScript(url, callback)
 
 
 
-											for(t=0; t<dataset.info[0].page_count;t++)
-	                                        {
-	                                        	
-	                                        	$("#"+ id + "_page-"+t+"").click(function () 
-	                                        	{
-	                                        		page = $(this).attr("id").split('-');
-	                                        		methods.getDatos(obj,parseInt(page[1])+1,methods.doTable);
-	                                        	});
-	                                    	}
+
 
 
 	                                        $("#"+id).prepend("<h4>"+obj.Titulo+"</h4>");
@@ -499,7 +498,8 @@ function loadScript(url, callback)
 	                                        for(i=0; i<obj.ABM.length;i++)
 	                                        {
 												obj.ABM[i].text = typeof(obj.ABM[i].text) == 'undefined' ? "" : obj.ABM[i].text;
-	                                            if(obj.ABM[i].refresh == "true")
+
+												if(obj.ABM[i].refresh == "true")
 	                                                btn_options += "<button id='"+id+"_refresh' class='btn btn-primary margin3' data-toggle='tooltip' data-placement='top' title='Refrescar'><i class='grid-icon icon-refresh'>&#xe800;</i>"+obj.ABM[i].text+"</button> ";
 
 	                                            if(obj.ABM[i].add == "true")
@@ -510,19 +510,37 @@ function loadScript(url, callback)
 
 	                                             if(obj.ABM[i].delete == "true")
 	                                                btn_options += "<button id='"+id+"_del'  class='btn btn-danger margin3' data-toggle='tooltip' data-placement='top' title='Borrar'><i class='grid-icon icon-del'>&#xe803;</i>"+obj.ABM[i].text+"</button> ";
+
+                                                if(obj.ABM[i].search == "true")
+                                                    btn_options += '<div class="form-group">'+
+                                            					    '<label for="usr">Búsqueda rápida:</label>'+
+                                            							'<input type="text" class="form-control" value="'+dataset.info[0].key+'" name="'+id+'_search" id="'+id+'_search">'+
+                                                					'</div>';
 	                                        }
 
+                                            for(t=0; t<dataset.info[0].page_count;t++)
+                                            {
+
+                                                $("#"+ id + "_page-"+t+"").click(function ()
+                                                {
+                                                    page = $(this).attr("id").split('-');
+                                                    console.log($("#"+ id + "_search").val());
+                                                    methods.getDatos(obj,parseInt(page[1])+1,methods.doTable,$("#"+ id + "_search").val());
+
+                                                });
+                                            }
 	                                        if(obj.export2XLS == "true")
 	                                        {
 	                                        	btn_options += "<button id='"+id+"_XLSX' class='btn btn-primary margin3' data-toggle='tooltip' data-placement='top' title='Exportar a excel'><i class='grid-icon icon-xls'>&#xe805;</i> </button>";
 	                                        }
 	                                        $("#"+id+"_buttons").append(btn_options);    
 
-	                                        $("#"+ id + "_refresh").click(function () { methods.getDatos(obj,1,methods.doTable); });
+	                                        $("#"+ id + "_refresh").click(function () { methods.getDatos(obj,1,methods.doTable,""); });
 	                                        $("#"+ id + "_add").click(function () { methods.doModal(params,0); });
 	                                        $("#"+ id + "_edit").click(function () { methods.doModal(params,1); });
 	                                        $("#"+ id + "_del").click(function () { methods.doModal(params,2); });
 	                                        $("#"+ id + "_XLSX").click(function () { methods.export2XLS(obj); });
+                                            $("#"+ id + "_search").change (function () { methods.Search(obj,$("#"+ id + "_search").val()); });
 
 	                                        for(i=0;i<obj.Columnas.length;i++)
 	                                        {
@@ -544,7 +562,7 @@ function loadScript(url, callback)
                                         				criteria_flag=false;
                                         			}
                                         			//$("#"+id).empty();   
-                                        			methods.getDatos(obj,dataset.info[0].page,methods.doTable);
+                                        			methods.getDatos(obj,dataset.info[0].page,methods.doTable,"");
                                         			
                                        			})
 	                                        }
@@ -1210,7 +1228,7 @@ function loadScript(url, callback)
 
 
                 var obj = $.extend ($(this),config);
-                methods.getDatos(obj,1,methods.doTable);
+                methods.getDatos(obj,1,methods.doTable,"");
 				//methods.fillTable(obj);
                 return $.extend ($(this),config);
             };
