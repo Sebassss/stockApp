@@ -11,274 +11,72 @@
 require_once "../app/data/class.conexion.php";
 
 
-//Elimina registros a partir del modal
-function deleteDatos()
+date_default_timezone_set('America/Argentina/San_Juan');
+
+function fecha_hora($fecha)
 {
+    $dia =  date('l',strtotime($fecha));
+    if ($dia=="Monday") $dia="Lunes";
+    if ($dia=="Tuesday") $dia="Martes";
+    if ($dia=="Wednesday") $dia="Miércoles";
+    if ($dia=="Thursday") $dia="Jueves";
+    if ($dia=="Friday") $dia="Viernes";
+    if ($dia=="Saturday") $dia="Sabado";
+    if ($dia=="Sunday") $dia="Domingo";
 
-    /*Parser para  metodos put y delete*/
-    parse_str(file_get_contents("php://input"),$post_vars);
-    //print_r($post_vars);
+    $mes =  date('F',strtotime($fecha));
+    if ($mes=="January") $mes="Enero";
+    if ($mes=="February") $mes="Febrero";
+    if ($mes=="March") $mes="Marzo";
+    if ($mes=="April") $mes="Abril";
+    if ($mes=="May") $mes="Mayo";
+    if ($mes=="June") $mes="Junio";
+    if ($mes=="July") $mes="Julio";
+    if ($mes=="August") $mes="Agosto";
+    if ($mes=="September") $mes="Setiembre";
+    if ($mes=="October") $mes="Octubre";
+    if ($mes=="November") $mes="Noviembre";
+    if ($mes=="December") $mes="Diciembre";
 
+    $ano =  date('Y',strtotime($fecha));
+    $dia2= date('d',strtotime($fecha));
+    $hora = date('H:i',strtotime($fecha));
+    $fecha  = $dia.', '.$dia2.' de '.$mes.' de '.$ano. ' a las '.$hora;
 
-
-    $db = new MySQL();
-    $a = $post_vars['table_field_movimiento_id'];
-    $result = $db->consulta("delete from movimientos where movimiento_id = '$a'");
-    $mensaje = "No pudo Eliminar.";
-    $estado = "false";
-
-    if(!$result)
-    {
-        $mensaje = "Procesado correctamente.";
-        $estado = "true";
-    }
-    else
-    {
-        $mensaje = "Error: ".$result;
-    }
-
-    $response = array(
-        'mensaje' => $mensaje,
-        'estado' => $estado,
-    );
-
-    echo json_encode($response);
-
-}
-
-//modifica registros
-function editDatos()
-{
-
-    /*Parser para  metodos put y delete*/
-    parse_str(file_get_contents("php://input"),$post_vars);
-    //print_r($post_vars);
-
-
-
-    $db = new MySQL();
-    $a = $post_vars['table_field_movimiento_id'];
-    $b = $post_vars['table_field_proveedor_id'];
-    $c = $post_vars['table_field_articulo_id'];
-    $d = $post_vars['table_field_operacion'];
-    $e = $post_vars['table_field_cantidad'];
-
-    $result = $db->consulta("update movimientos set proveedor_id= '$b', articulo_id='$c', operacion='$d', cantidad='$e'  where movimiento_id = '$a'");
-    $mensaje = "No pudo editar.";
-    $estado = "false";
-
-    if(!$result)
-    {
-        $mensaje = "Procesado correctamente.";
-        $estado = "true";
-    }
-    else
-    {
-        $mensaje = "Error: ".$result;
-    }
-
-    $response = array(
-        'mensaje' => $mensaje,
-        'estado' => $estado,
-    );
-
-    echo json_encode($response);
+    return $fecha;
 
 }
+echo '<div class="row">
+        <div class="col-12 col-md-12">
+            <div class="row">
+            <!-- Boxes de Acoes -->
+            <div class="col-xs-12 col-sm-12 col-lg-12">
+                    <div class="box">
+                        <div class="icon">
+                            <div class="image"><i class="glyphicon glyphicon-random"></i></div>
+                            <div class="info">
+                                <h3 class="title">Registro de Movimientos </h3>
+                                <p>';
 
-//Guarda registros a partir del modal
-function saveDatos()
-{
-    $db = new MySQL();
-    //print_r( $_POST);
+                                $db = new MySQL();
+                                $result = $db->Consulta("select l.log, u.usuario_nombre as usuario, l.fecha  from logs l left join usuarios u on u.usuario_id = l.usuario_id order by l.id desc ");
 
-    $a = $_POST['table_field_deposito_id'];
-    $b = $_POST['table_field_proveedor_id'];
-    $c = $_POST['table_field_articulo_id'];
-    $d = $_POST['table_field_operacion'];
-    $e = $_POST['table_field_cantidad'];
+                                while($row = $db->fetch_array($result))
+                                {
+                                    echo '<li class="list-group-item list-group-item-danger text-left">El dia <u>'.fecha_hora($row['fecha']).
+                                         '</u> se registra un evento con el usuario <b>'.$row['usuario'].'</b>: <i>'.$row['log'].'</i>';
+                                }
+                                echo '</p>
+                                
+                            </div>
+                        </div>
+                        <div class="space"></div>
+                    </div>
+                </div>
 
-
-    $result = $db->consulta("insert into movimientos (deposito_id,proveedor_id, articulo_id,operacion,cantidad) values ('$a','$b','$c','$d','$e')");
-
-
-    $mensaje = "No pudo guardar.";
-    $estado = "false";
-
-    if(!$result)
-    {
-        $mensaje = "Procesado correctamente.";
-        $estado = "true";
-    }
-    else
-    {
-        $mensaje = "Error: ".$result;
-    }
-
-    $response = array(
-        'mensaje' => $mensaje,
-        'estado' => $estado,
-    );
-
-    echo json_encode($response);
-}
-
-//Carga registros en la grilla
-function getDatos()
-{
-
-
-if(isset($_GET['pagesize']))
-{
-    $TAMANO_PAGINA = $_GET['pagesize'];
-}
-else
-{
-    $TAMANO_PAGINA=10;
-}
-
-//examino la página a mostrar y el inicio del registro a mostrar
-
-if(isset($_GET['page']))
-{
-    $pagina = $_GET["page"];
-    if (!$pagina)
-    {
-        $inicio = 0;
-        $pagina = 1;
-    }
-    else
-    {
-        $inicio = ($pagina - 1) * $TAMANO_PAGINA;
-    }
-    //calculo el total de páginas
-}
-else
-{
-    $inicio = 0;
-    $pagina=1;
-}
-
-
-$db = new MySQL();
-
-$consulta = $db->Consulta("select m.movimiento_id, m.deposito_id,d.deposito_nombre, m.proveedor_id,p.proveedor_nombre, m.articulo_id,a.articulo_nombre, (case  m.operacion when 0 then 'INGRESO' when 1 then 'EGRESO' end) as operacion , m.cantidad from movimientos m 
-                           left join depositos d on d.deposito_id = m.deposito_id 
-                           left join proveedores p on p.proveedor_id = m.proveedor_id
-                           left join articulos a on a.articulo_id = m.articulo_id");
-$num_total_registros = $db->num_rows($consulta);
-$total_paginas = ceil($num_total_registros / $TAMANO_PAGINA);
-
-
-$consulta = $db->Consulta("select m.movimiento_id, m.deposito_id,d.deposito_nombre, m.proveedor_id,p.proveedor_nombre, m.articulo_id,a.articulo_nombre, (case  m.operacion when 0 then 'INGRESO' when 1 then 'EGRESO' end) as operacion, m.cantidad from movimientos m 
-                           left join depositos d on d.deposito_id = m.deposito_id 
-                           left join proveedores p on p.proveedor_id = m.proveedor_id
-                           left join articulos a on a.articulo_id = m.articulo_id limit ". $inicio. ",". $TAMANO_PAGINA.";");
-
-$x = array();
-
-$i=0;
-while($row = $db->fetch_array($consulta))
-{
-    $x[$i] = $row;
-    $i++;
-}
-
-
-$t = array(array(
-    'rows' => $i,
-    'page' => $pagina,
-    'page_count' => $total_paginas,
-    'total_rows' => $num_total_registros,
-    'start' => $inicio));
-
-
-//array_push($x, $t);
-//echo json_encode($x);
-
-
-
-class resultado {
-
-    public function __construct($a,$b){
-        $this->values = $a;
-        $this->info = $b;
-    }
-
-    public $values;
-    public $info;
-}
-
-$elresultado = new resultado($x,$t);
-
-echo json_encode($elresultado);
-
-
-
-}
-
-
-function getProveedor()
-{
-    $db = new MySQL();
-
-    $consulta = $db->Consulta("SELECT  a.proveedor_nombre, a.proveedor_id  FROM proveedores a");
-
-    $i = 0;
-    $x = array();
-    while ($row = $db->fetch_array($consulta)) {
-        $x[$i] = array("value" => $row['proveedor_id'], "text" => $row['proveedor_nombre']);
-        $i++;
-    }
-
-    echo json_encode($x);
-
-}
-
-function getArticulos()
-{
-    $db = new MySQL();
-
-    $consulta = $db->Consulta("SELECT  a.articulo_nombre, a.articulo_id  FROM articulos a");
-
-    $i = 0;
-    $x = array();
-    while ($row = $db->fetch_array($consulta)) {
-        $x[$i] = array("value" => $row['articulo_id'], "text" => $row['articulo_nombre']);
-        $i++;
-    }
-
-    echo json_encode($x);
-
-}
-
-function getDeposito()
-{
-    $db = new MySQL();
-
-    $consulta = $db->Consulta("SELECT  a.deposito_nombre, a.deposito_id  FROM depositos a");
-
-    $i = 0;
-    $x = array();
-    while ($row = $db->fetch_array($consulta)) {
-        $x[$i] = array("value" => $row['deposito_id'], "text" => $row['deposito_nombre']);
-        $i++;
-    }
-
-    echo json_encode($x);
-
-}
-
-function getOperacion()
-{
-
-    $x = array();
-
-
-    $x[0] = array("value" => "0", "text" => "INGRESO");
-    $x[1] = array("value" => "1", "text" => "EGRESO");
-
-
-    echo json_encode($x);
-
-}
+            
+                <!-- /Boxes de Acoes -->
+         </div>
+        </div>
+    </div>
+';

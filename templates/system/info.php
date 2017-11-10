@@ -53,7 +53,7 @@ echo '<div class="row">
                         <div class="icon">
                             <div class="image"><i class="fa fa-thumbs-o-up"></i></div>
                             <div class="info">
-                                <h3 class="title">Últimos 10 eventos </h3>
+                                <h3 class="title">Ultimos movimientos</h3>
                                 <p>';
 
                                 $db = new MySQL();
