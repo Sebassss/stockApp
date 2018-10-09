@@ -30,6 +30,12 @@ function deleteDatos()
 
     $db = new MySQL();
     $a = $post_vars['table_field_articulo_id'];
+
+    $result_tmp = $db->consulta("select * from articulos where articulo_id = '$a'");
+    $row = $db->fetch_array($result_tmp);
+    $art_nombre=$row['nombre'];
+    $art_cant = $row['cantidad'];
+
     $result = $db->consulta("delete from articulos where articulo_id = '$a'");
     $mensaje = "No pudo Eliminar.";
     $estado = "false";
@@ -38,6 +44,9 @@ function deleteDatos()
     {
         $mensaje = "Procesado correctamente.";
         $estado = "true";
+
+        $alias = $_SESSION['userCredentials']['usuario_alias'];
+        insertTolog("El usuario: '.$alias.', ha eliminado un artículo del stock:  ".'Nombre: '.$art_nombre.' Cantidad: '.$art_cant);
     }
     else
     {
@@ -80,6 +89,9 @@ function editDatos()
     {
         $mensaje = "Procesado correctamente.";
         $estado = "true";
+
+        $alias = $_SESSION['userCredentials']['usuario_alias'];
+        insertTolog("El usuario: '.$alias.', ha editado un artículo del stock:  ".'Nombre: '.$d.' Cantidad: '.$h);
     }
     else
     {
@@ -96,6 +108,19 @@ function editDatos()
 }
 
 
+function getDeposito()
+{
+    $db = new MySQL();
+    $consulta = $db->Consulta("SELECT  a.deposito_nombre, a.deposito_id  FROM depositos a");
+    $i = 0;
+    $x = array();
+    while ($row = $db->fetch_array($consulta)) {
+        $x[$i] = array("value" => $row['deposito_id'], "text" => $row['deposito_nombre']);
+        $i++;
+    }
+    echo json_encode($x);
+}
+
 //Descuenta/Usa articulos
 function descArticulos()
 {
@@ -109,6 +134,14 @@ function descArticulos()
     $c = $post_vars['articulo_cantidad'];
     $d = $post_vars['articulo_comentario'];
 
+    /*
+    echo $a;
+    echo $b;
+    echo $c;
+    echo $d;
+
+    die;    
+    */
     $result_rows = $db->Consulta("select articulo_cantidad from articulos where articulo_id=".$a);
 
     $mensaje = "No pudo guardar.";
@@ -117,7 +150,9 @@ function descArticulos()
     if($db->num_rows($result_rows)>0) {
 
         $tmp = $db->fetch_array($result_rows);
+        //print_r($tmp);
         $resta = $tmp['articulo_cantidad'] - $c;
+
         if ($resta < 0)
         {
             $query = $db->Consulta("select a.articulo_cantidad,a.articulo_nombre, m.marca_nombre, r.rubro_nombre,d.deposito_nombre from articulos a 
@@ -194,6 +229,10 @@ function saveDatos()
     {
         $mensaje = "Procesado correctamente.";
         $estado = "true";
+
+        $alias = $_SESSION['userCredentials']['usuario_alias'];
+        insertTolog("El usuario: '.$alias.', ha agregado un nuevo artículo al stock:  ".'Nombre: '.$a.' Cantidad: '.$g);
+
     }
     else
     {
@@ -359,8 +398,6 @@ echo json_encode($elresultado);
 
 }
 
-
-
 function getDatos2()
 {
 
@@ -408,7 +445,6 @@ function getDatos2()
 
 
 }
-
 
 function getRubros()
 {

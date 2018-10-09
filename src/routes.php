@@ -18,6 +18,18 @@
 //DELETE	Delete	404 (Not Found), unless you want to delete the whole collection—not often desirable.	200 (OK). 404 (Not Found), if ID not found or invalid.
 
 
+$app->options('/{routes:.+}', function ($request, $response, $args) {
+    return $response;
+});
+
+$app->add(function ($req, $res, $next) {
+    $response = $next($req, $res);
+    return $response
+            ->withHeader('Access-Control-Allow-Origin', 'http://10.64.65.200')
+            ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
+            ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+});
+
 //PATH
 $app->any('/', function($req, $res, $args) use($app) {
 
@@ -108,6 +120,14 @@ $app->get('/abm_depositos', function($req, $res) use($app){
     });
 
 /*FIN RUBROS*/
+
+
+/*SALIDA DE STOCK*/
+//VISTA SALIDA DE STOCK
+    $app->get('/abm_salida', function($req, $res) use($app){
+        return $this->renderer->render($res, 'salida_de_stock/abm.salida.php');
+    });
+/*FIN SALIDA DE STOCK*/
 
 /*MARCAS*/
 //OBTENGO MARCAS
@@ -217,8 +237,21 @@ $app->get('/cerrar_sesion', function($req, $res) use($app){
         return $this->renderer->render($res, 'proveedores/abm.proveedores.php');
     });
 
+    //VISTA MOVIMIENTOS
+    $app->get('/abm_movimientos', function($req, $res) use($app){
+        return $this->renderer->render($res, '../app/controllers/abm_getMovimientosController.php');
+    });
+
 /*FIN PROVEEDORES*/
 
+/*MOVIMIENTOS*/
+//OBTENGO MOVIMIENTOS
+    $app->get('/abm_getMovimientos', function($req, $res) use($app){
+        require_once "../app/controllers/abm_getMovimientosController.php";
+        return getDatos();
+    });
+
+/*FIN MOVIMIENTOS*/
 
 /*ARTICULOS*/
 //OBTENGO ARTICULOS
@@ -282,61 +315,6 @@ $app->get('/cerrar_sesion', function($req, $res) use($app){
 /*FIN ARTICULOS*/
 
 
-/*MOVIMIENTOS*/
-//OBTENGO MOVIMIENTOS
-    $app->get('/abm_getMovimientos', function($req, $res) use($app){
-        require_once "../app/controllers/abm_getMovimientosController.php";
-        return getDatos();
-    });
-
-    //GUARDA MOVIMIENTOS
-    $app->post('/abm_getMovimientos', function($req, $res) use($app){
-        require_once "../app/controllers/abm_getMovimientosController.php";
-        return saveDatos();
-    });
-
-    //BORRA MOVIMIENTOS
-    $app->delete('/abm_getMovimientos', function($req, $res) use($app){
-        require_once "../app/controllers/abm_getMovimientosController.php";
-        return deleteDatos();
-    });
-
-    //BORRA MOVIMIENTOS
-    $app->put('/abm_getMovimientos', function($req, $res) use($app){
-        require_once "../app/controllers/abm_getMovimientosController.php";
-        return editDatos();
-    });
-
-    //OBTIENE PROVEEDORES
-    $app->get('/abm_getMovimientosProveedor', function($req, $res) use($app){
-        require_once "../app/controllers/abm_getMovimientosController.php";
-        return getProveedor();
-    });
-
-    //OBTIENE ARTICULOS
-    $app->get('/abm_getMovimientosArticulos', function($req, $res) use($app){
-        require_once "../app/controllers/abm_getMovimientosController.php";
-        return getArticulos();
-    });
-
-    //OBTIENE OPERACION
-    $app->get('/abm_getMovimientosOperacion', function($req, $res) use($app){
-        require_once "../app/controllers/abm_getMovimientosController.php";
-        return getOperacion();
-    });
-
-    //OBTIENE OPERACION
-    $app->get('/abm_getMovimientosDeposito', function($req, $res) use($app){
-        require_once "../app/controllers/abm_getMovimientosController.php";
-        return getDeposito();
-    });
-
-    //VISTA MOVIMIENTOS
-    $app->get('/abm_movimientos', function($req, $res) use($app){
-        return $this->renderer->render($res, 'movimientos/abm.movimientos.php');
-    });
-
-/*FIN MOVIMIENTOS*/
 
 
 /*GENERADOR DE CODIGO DE BARRAS*/
@@ -411,10 +389,10 @@ $app->get('/getArticuloCodigo', function($req, $res) use($app){
 //});
 //
 ////OBTIENE OPERACION
-//$app->get('/abm_getMovimientosDeposito', function($req, $res) use($app){
-//    require_once "../app/controllers/abm_getMovimientosController.php";
-//    return getDeposito();
-//});
+$app->get('/abm_getMovimientosDeposito', function($req, $res) use($app){
+    require_once "../app/controllers/abm_getArticulosController.php";
+    return getDeposito();
+});
 //
 //VISTA STOCK
 $app->get('/abm_stock', function($req, $res) use($app){

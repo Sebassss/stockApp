@@ -32,7 +32,7 @@ jQuery(document).ready(function($)
         url: "abm_getArticulos2",
         method : "GET",
         datatype: "json",
-        pagesize: 10,
+        pagesize: 50,
         paginate: "true",
         fixedrows: "10"
     };
