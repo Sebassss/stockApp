@@ -15,6 +15,7 @@ function insertTolog($valor, $usuario_id)
 
     $db = new MySQL();
     $result = $db->Consulta("insert into logs (log,usuario_id)  values('$valor','$usuario_id')");
+
 }
 
 //Elimina registros a partir del modal
@@ -33,8 +34,8 @@ function deleteDatos()
 
     $result_tmp = $db->consulta("select * from articulos where articulo_id = '$a'");
     $row = $db->fetch_array($result_tmp);
-    $art_nombre=$row['nombre'];
-    $art_cant = $row['cantidad'];
+    $art_nombre=$row['articulo_nombre'];
+    $art_cant = $row['articulo_cantidad'];
 
     $result = $db->consulta("delete from articulos where articulo_id = '$a'");
     $mensaje = "No pudo Eliminar.";
@@ -46,7 +47,8 @@ function deleteDatos()
         $estado = "true";
 
         $alias = $_SESSION['userCredentials']['usuario_alias'];
-        insertTolog("El usuario: '.$alias.', ha eliminado un artículo del stock:  ".'Nombre: '.$art_nombre.' Cantidad: '.$art_cant);
+        $usuario_id = $_SESSION['userCredentials']['usuario_id'];
+        insertTolog("El usuario: ".$alias.", ha eliminado un artículo del stock,  Nombre: ".$art_nombre." Cantidad: ".$art_cant,$usuario_id);
     }
     else
     {
@@ -91,7 +93,8 @@ function editDatos()
         $estado = "true";
 
         $alias = $_SESSION['userCredentials']['usuario_alias'];
-        insertTolog("El usuario: '.$alias.', ha editado un artículo del stock:  ".'Nombre: '.$d.' Cantidad: '.$h);
+        $usuario_id = $_SESSION['userCredentials']['usuario_id'];
+        insertTolog("El usuario: ".$alias.", ha editado un artículo del stock,  Nombre: ".$d." Cantidad: ".$h,$usuario_id);
     }
     else
     {
@@ -231,7 +234,8 @@ function saveDatos()
         $estado = "true";
 
         $alias = $_SESSION['userCredentials']['usuario_alias'];
-        insertTolog("El usuario: '.$alias.', ha agregado un nuevo artículo al stock:  ".'Nombre: '.$a.' Cantidad: '.$g);
+        $usuario_id = $_SESSION['userCredentials']['usuario_id'];
+        insertTolog("El usuario: ".$alias.", ha agregado un nuevo artículo al stock, Nombre: ".$a." Cantidad: ".$g,$usuario_id);
 
     }
     else
