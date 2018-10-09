@@ -16,6 +16,10 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
+
+
+
 var app = {
     // Application Constructor
     initialize: function() {
@@ -27,13 +31,18 @@ var app = {
     // 'load', 'deviceready', 'offline', and 'online'.
     bindEvents: function() {
         document.addEventListener('deviceready', this.onDeviceReady, false);
+
+
     },
     // deviceready Event Handler
     //
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
+        document.addEventListener("backbutton", onBackKeyDown, false);
         app.receivedEvent('deviceready');
+        window.location.replace("login.html");
+
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
@@ -42,3 +51,23 @@ var app = {
         console.log('Received Event: ' + id);
     }
 };
+
+
+
+
+function onBackKeyDown()
+{
+    var page=myApp.getCurrentView().activePage;
+    myApp.hidePreloader();
+    if(page.name=="index")
+    {
+        myApp.confirm('¿Quiere salir de la aplicación?', 'Salir',function ()
+        {
+            navigator.app.clearHistory(); navigator.app.exitApp();
+        });
+    }
+    else
+    {
+        mainView.router.back();
+    }
+}

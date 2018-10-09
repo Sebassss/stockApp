@@ -2,13 +2,11 @@
  * Created by Ivan on 22/09/2017.
  */
 
-/*
-$$(document).on('DOMContentLoaded', function(){
-   
-    
-});
-*/
+
 var myApp = new Framework7();
+
+
+
 
 
 $("#loginButton").click(function(){
@@ -16,6 +14,9 @@ $("#loginButton").click(function(){
     login();
 
 });
+
+
+
 
 function login()
 {
@@ -34,7 +35,7 @@ function login()
         },
         success: function(data)
         {
-            console.log(data)
+            //console.log(data)
 
             myApp.hidePreloader();
 

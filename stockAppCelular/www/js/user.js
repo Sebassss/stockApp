@@ -9,9 +9,11 @@ var myApp = new Framework7();
 
 var $$ = Dom7;
 
+
 var articulos;
 
 var usuario_id;
+
 
 function GetURLParameter(sParam) {
     var sPageURL = window.location.search.substring(1);
@@ -24,6 +26,39 @@ function GetURLParameter(sParam) {
     }
 }
 
+
+$("#refresh").click(function(){
+
+
+    $("#listContent").empty();
+    $("#busca").val("");
+    usuario_id = GetURLParameter('usuario_id');
+
+    myApp.showPreloader('Espere...');
+
+    var mySearchbar = $$('.searchbar')[0].f7Searchbar;
+
+    $.ajax({
+        url: 'http://otrsminsalud.sanjuan.gob.ar/stockapp/public/abm_getArticulos',
+        type: "GET",
+        dataType: "json",
+        success: function(data)
+        {
+            //console.dir(data);
+
+            fillTable(data);
+            articulos = data;
+
+            myApp.hidePreloader();
+        },
+        error: function(error)
+        {
+            console.log(error);
+            myApp.hidePreloader();
+        }
+
+    });
+})
 
 $(function(){
 
