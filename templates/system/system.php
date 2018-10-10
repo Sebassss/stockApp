@@ -304,8 +304,9 @@ if(!isset($_SESSION['menu'])) {
 <!---->
 <!--    </div>-->
 
-    <?php require_once "info.php" ;?>
-
+    <div id="info_mov">
+    <?php //require_once "info.php" ;?>
+    </div>
 
 
 
@@ -350,6 +351,24 @@ if(!isset($_SESSION['menu'])) {
                 console.log('Scrolling End');
             }
         });
+
+        setInterval(function(){
+
+            $.ajax({
+                url: "abm_getMovimientosInicial",
+                type: "GET",
+                global: true,
+                cache: false
+
+            }).done(function (data) {
+
+                $("#info_mov").html(data);
+
+
+            });
+
+        },5000)
+
     });
 </script>
 
